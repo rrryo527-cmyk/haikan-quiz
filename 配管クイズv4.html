@@ -95,6 +95,11 @@
   .genre-4 { background: rgba(200,150,30,0.1); color: #9a7a10; border: 1px solid rgba(200,150,30,0.3); }
   .genre-5 { background: rgba(70,130,180,0.1); color: #3a7ab5; border: 1px solid rgba(70,130,180,0.3); }
   .genre-6 { background: rgba(139,90,43,0.1); color: #8b5a2b; border: 1px solid rgba(139,90,43,0.3); }
+  .genre-7 { background: rgba(100,60,150,0.1); color: #6a3ca0; border: 1px solid rgba(100,60,150,0.3); }
+  .genre-8 { background: rgba(180,100,30,0.1); color: #b46420; border: 1px solid rgba(180,100,30,0.3); }
+  .genre-9 { background: rgba(0,100,180,0.1); color: #0064b4; border: 1px solid rgba(0,100,180,0.3); }
+  .genre-10 { background: rgba(0,128,128,0.1); color: #008080; border: 1px solid rgba(0,128,128,0.3); }
+  .genre-11 { background: rgba(220,120,20,0.1); color: #d07814; border: 1px solid rgba(220,120,20,0.3); }
 
   .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative; }
   .q-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
@@ -212,6 +217,11 @@
         <button class="genre-btn" data-genre="4"><span class="genre-icon">📋</span>設備点検<span class="genre-count" id="genreCount4"></span></button>
         <button class="genre-btn" data-genre="5"><span class="genre-icon">🤝</span>ビジネスマナー<span class="genre-count" id="genreCount5"></span></button>
         <button class="genre-btn" data-genre="6"><span class="genre-icon">🏗️</span>内装工事<span class="genre-count" id="genreCount6"></span></button>
+        <button class="genre-btn" data-genre="7"><span class="genre-icon">🔧</span>管工事施工管理<span class="genre-count" id="genreCount7"></span></button>
+        <button class="genre-btn" data-genre="8"><span class="genre-icon">🚧</span>土木施工管理<span class="genre-count" id="genreCount8"></span></button>
+        <button class="genre-btn" data-genre="9"><span class="genre-icon">🏢</span>建築施工管理<span class="genre-count" id="genreCount9"></span></button>
+        <button class="genre-btn" data-genre="10"><span class="genre-icon">🚰</span>給水装置<span class="genre-count" id="genreCount10"></span></button>
+        <button class="genre-btn" data-genre="11"><span class="genre-icon">⚡</span>電気工事士<span class="genre-count" id="genreCount11"></span></button>
         <button class="genre-btn" data-genre="-1"><span class="genre-icon">🎲</span>全ジャンル<span class="genre-count" id="genreCountAll"></span></button>
       </div>
       <h2 style="font-size:16px;margin-top:20px;color:var(--text);">📊 難易度を選択</h2>
@@ -313,7 +323,7 @@
 </div>
 
 <script>
-const GENRES=[{name:'配管工事',icon:'🔧',cls:'genre-0'},{name:'消防設備点検',icon:'🧯',cls:'genre-1'},{name:'貯水槽清掃',icon:'💧',cls:'genre-2'},{name:'排水管清掃',icon:'🚿',cls:'genre-3'},{name:'設備点検',icon:'📋',cls:'genre-4'},{name:'ビジネスマナー',icon:'🤝',cls:'genre-5'},{name:'内装工事',icon:'🏗️',cls:'genre-6'}];
+const GENRES=[{name:'配管工事',icon:'🔧',cls:'genre-0'},{name:'消防設備点検',icon:'🧯',cls:'genre-1'},{name:'貯水槽清掃',icon:'💧',cls:'genre-2'},{name:'排水管清掃',icon:'🚿',cls:'genre-3'},{name:'設備点検',icon:'📋',cls:'genre-4'},{name:'ビジネスマナー',icon:'🤝',cls:'genre-5'},{name:'内装工事',icon:'🏗️',cls:'genre-6'},{name:'管工事施工管理',icon:'🔧',cls:'genre-7'},{name:'土木施工管理',icon:'🚧',cls:'genre-8'},{name:'建築施工管理',icon:'🏢',cls:'genre-9'},{name:'給水装置',icon:'🚰',cls:'genre-10'},{name:'電気工事士',icon:'⚡',cls:'genre-11'}];
 const ALL_QUESTIONS=[
 {"q":"給水管に最もよく使用される管の種類はどれか？","o":["水道用硬質塩化ビニルライニング鋼管","硬質塩化ビニル管（VU管）","排水用硬質塩化ビニル管","鋳鉄管"],"a":0,"genre":0,"d":1,"ex":"給水管には錆びにくく耐久性のある水道用硬質塩化ビニルライニング鋼管（SGP-VL）が広く用いられています。","oex":["正解。給水管には錆びにくく耐久性のある水道用硬質塩化ビニルライニング鋼管（S…","不正解。硬質塩化ビニル管（VU管）ではなく、水道用硬質塩化ビニルライニング鋼管が正しい答えです。","不正解。排水用硬質塩化ビニル管ではなく、水道用硬質塩化ビニルライニング鋼管が正しい答えです。","不正解。鋳鉄管ではなく、水道用硬質塩化ビニルライニング鋼管が正しい答えです。"]},
 {"q":"排水管の勾配として適切なものはどれか？（管径100mm）","o":["1/10以上","1/500以上","1/100以上","1/1000以上"],"a":2,"genre":0,"d":1,"ex":"管径100mmの場合、排水管の最小勾配は1/100とされています。管径が大きくなると最小勾配は緩くなります。","oex":["不正解。1/10以上ではなく、1/100以上が正しい答えです。","不正解。1/500以上ではなく、1/100以上が正しい答えです。","正解。管径100mmの場合、排水管の最小勾配は1/100とされています","不正解。1/1000以上ではなく、1/100以上が正しい答えです。"]},
