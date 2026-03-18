@@ -3,23 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>建築設備 知識クイズ</title>
+<title>建築設備 知識クイズ Pro</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Oswald:wght@600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
 
   :root {
-    --bg: #f0f2f5;
-    --surface: #ffffff;
-    --surface2: #f7f8fa;
-    --border: #d0d7de;
-    --accent: #e67e00;
-    --accent2: #c05500;
-    --text: #1f2328;
-    --text-muted: #656d76;
-    --correct: #1a7f37;
-    --correct-bg: #dafbe1;
-    --wrong: #cf222e;
-    --wrong-bg: #ffebe9;
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232633;
+    --border: #2d3148;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --accent-glow: rgba(108,92,231,0.3);
+    --text: #e8e8ef;
+    --text-muted: #8b8fa3;
+    --correct: #00b894;
+    --correct-bg: rgba(0,184,148,0.15);
+    --wrong: #ff6b6b;
+    --wrong-bg: rgba(255,107,107,0.15);
+    --gold: #ffd32a;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,23 +30,22 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-family: 'Noto Sans JP', 'Inter', 'Hiragino Kaku Gothic ProN', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    -webkit-font-smoothing: antialiased;
   }
 
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background:
-      linear-gradient(90deg, transparent 49.5%, #dce3ea 49.5%, #dce3ea 50.5%, transparent 50.5%),
-      linear-gradient(0deg, transparent 49.5%, #dce3ea 49.5%, #dce3ea 50.5%, transparent 50.5%);
-    background-size: 80px 80px;
-    opacity: 0.4;
+    background: radial-gradient(ellipse at 20% 50%, rgba(108,92,231,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(162,155,254,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(0,184,148,0.04) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
   }
@@ -51,20 +53,20 @@
   .container { width: 100%; max-width: 760px; position: relative; z-index: 1; }
 
   .header { text-align: center; padding: 28px 0 20px; }
-  .header-label { font-family: 'Oswald', sans-serif; font-size: 11px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
-  .header h1 { font-weight: 900; font-size: 26px; color: var(--text); line-height: 1.2; }
-  .header h1 span { color: var(--accent); }
+  .header-label { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 4px; color: var(--accent2); text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+  .header h1 { font-weight: 900; font-size: 28px; color: var(--text); line-height: 1.2; background: linear-gradient(135deg, var(--accent2), var(--accent), var(--correct)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header h1 span { -webkit-text-fill-color: var(--accent2); }
 
   #startScreen { text-align: center; padding: 30px 0; }
 
-  .start-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .start-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 0 0 1px rgba(108,92,231,0.1); backdrop-filter: blur(10px); }
   .start-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--accent); }
   .start-card p { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 8px; }
 
   .genre-selector { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 12px 0 20px; }
-  .genre-btn { background: var(--surface2); border: 2px solid var(--border); color: var(--text-muted); padding: 10px 14px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 700; font-family: inherit; transition: all 0.2s; flex: 1; min-width: 90px; text-align: center; line-height: 1.4; }
-  .genre-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .genre-btn.selected { border-color: var(--accent); color: #fff; background: var(--accent); }
+  .genre-btn { background: var(--surface2); border: 2px solid var(--border); color: var(--text-muted); padding: 10px 14px; border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 700; font-family: inherit; transition: all 0.3s; flex: 1; min-width: 90px; text-align: center; line-height: 1.4; }
+  .genre-btn:hover { border-color: var(--accent); color: var(--accent2); box-shadow: 0 0 16px var(--accent-glow); }
+  .genre-btn.selected { border-color: var(--accent); color: #fff; background: linear-gradient(135deg, var(--accent), #8b5cf6); box-shadow: 0 4px 16px var(--accent-glow); }
   .genre-btn .genre-icon { display: block; font-size: 22px; margin-bottom: 4px; }
   .genre-btn .genre-count { display: block; font-size: 10px; font-weight: 400; opacity: 0.8; margin-top: 2px; }
 
@@ -72,10 +74,10 @@
   .count-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: inherit; transition: all 0.2s; }
   .count-btn:hover, .count-btn.selected { border-color: var(--accent); color: var(--accent); background: rgba(230,126,0,0.08); }
 
-  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-weight: 700; font-size: 16px; padding: 14px 48px; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; letter-spacing: 1px; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230,126,0,0.3); }
-  .btn-secondary { background: transparent; color: var(--text-muted); font-size: 14px; padding: 10px 24px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; margin-top: 12px; }
-  .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-weight: 700; font-size: 16px; padding: 16px 48px; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); letter-spacing: 1px; box-shadow: 0 4px 16px var(--accent-glow); }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px var(--accent-glow), 0 0 0 2px var(--accent); }
+  .btn-secondary { background: var(--surface2); color: var(--text-muted); font-size: 14px; padding: 12px 24px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-family: inherit; transition: all 0.3s; margin-top: 12px; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); background: rgba(108,92,231,0.08); }
 
   #quizScreen { display: none; }
 
@@ -83,7 +85,7 @@
   .progress-info { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
   .progress-info strong { color: var(--accent); font-size: 18px; }
   .bar-bg { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; transition: width 0.4s ease; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2), var(--correct)); border-radius: 4px; transition: width 0.4s ease; box-shadow: 0 0 8px var(--accent-glow); }
   .score-display { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
   .score-display strong { color: var(--correct); }
 
@@ -101,7 +103,7 @@
   .genre-10 { background: rgba(0,128,128,0.1); color: #008080; border: 1px solid rgba(0,128,128,0.3); }
   .genre-11 { background: rgba(220,120,20,0.1); color: #d07814; border: 1px solid rgba(220,120,20,0.3); }
 
-  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 14px; box-shadow: 0 4px 24px rgba(0,0,0,0.2); position: relative; }
   .q-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .q-difficulty { font-size: 11px; color: var(--text-muted); margin-left: auto; }
 
@@ -124,8 +126,8 @@
   .hint-text.show { display: block; }
 
   .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
-  .option-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 14px 18px; border-radius: 10px; cursor: pointer; font-size: 16px; font-family: inherit; text-align: left; transition: all 0.15s; display: flex; align-items: center; gap: 12px; line-height: 1.5; }
-  .option-btn:hover:not(:disabled) { border-color: var(--accent); background: rgba(230,126,0,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .option-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 14px 18px; border-radius: 12px; cursor: pointer; font-size: 16px; font-family: inherit; text-align: left; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; gap: 12px; line-height: 1.5; }
+  .option-btn:hover:not(:disabled) { border-color: var(--accent); background: rgba(108,92,231,0.1); box-shadow: 0 2px 12px var(--accent-glow); transform: translateX(4px); }
   .option-label { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: 'Oswald', sans-serif; }
   .option-btn.correct { border-color: var(--correct); background: var(--correct-bg); color: #1a7f37; }
   .option-btn.correct .option-label { background: var(--correct); border-color: var(--correct); color: #fff; }
@@ -142,9 +144,9 @@
   .explanation.show { display: block; }
   .explanation strong { color: var(--text); }
 
-  .nav-btn { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-weight: 700; font-size: 15px; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; display: none; }
+  .nav-btn { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-weight: 700; font-size: 15px; padding: 16px; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; transition: all 0.3s; display: none; box-shadow: 0 4px 16px var(--accent-glow); }
   .nav-btn.show { display: block; }
-  .nav-btn:hover { opacity: 0.9; }
+  .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
 
   .quiz-sub-actions { display: flex; gap: 8px; margin-top: 10px; margin-bottom: 30px; }
   .quiz-sub-btn { flex: 1; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-size: 13px; padding: 10px; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
@@ -152,7 +154,7 @@
 
   #resultScreen { display: none; text-align: center; padding: 30px 0; }
   .result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 36px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .result-score { font-size: 72px; font-weight: 900; color: var(--accent); line-height: 1; margin: 14px 0 6px; font-family: 'Oswald', sans-serif; }
+  .result-score { font-size: 72px; font-weight: 900; background: linear-gradient(135deg, var(--accent2), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin: 14px 0 6px; font-family: 'Inter', sans-serif; }
   .result-total { font-size: 16px; color: var(--text-muted); margin-bottom: 20px; }
   .result-rank { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
   .result-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 20px 0; }
@@ -202,8 +204,8 @@
 <body>
 <div class="container">
   <div class="header">
-    <div class="header-label">建築設備 トレーニング</div>
-    <h1>建築設備<span>知識クイズ</span></h1>
+    <div class="header-label">Professional Training System</div>
+    <h1>建築設備 知識クイズ Pro</h1>
   </div>
 
   <div id="startScreen">
@@ -244,6 +246,7 @@
       </div>
       <button class="btn-primary" id="startBtn">⚔️ 挑戦者</button><br>
       <button class="btn-secondary" id="glossaryBtn">📖 用語辞典を開く</button>
+      <button class="btn-secondary" id="manualBtn">📋 作業マニュアル</button>
       <button class="btn-secondary" id="historyBtn">📊 成績履歴を見る</button>
       <button class="btn-secondary" id="adminBtn">👑 王の玉座</button>
     </div>
@@ -258,6 +261,16 @@
     <input type="text" class="glossary-search" id="glossarySearch" placeholder="🔍 用語を検索...">
     <div class="glossary-cats" id="glossaryCats"></div>
     <div class="glossary-list" id="glossaryList"></div>
+  </div>
+
+  <!-- 作業マニュアル画面 -->
+  <div id="manualScreen" style="display:none;padding:20px 0;">
+    <div class="glossary-header">
+      <button class="glossary-back" id="manualBack">← 戻る</button>
+      <h2>📋 作業マニュアル</h2>
+    </div>
+    <div class="glossary-cats" id="manualCats"></div>
+    <div id="manualContent" class="glossary-list"></div>
   </div>
 
   <!-- 管理者画面 -->
@@ -1620,6 +1633,85 @@ document.getElementById('glossaryBack').addEventListener('click',()=>{
 });
 
 document.getElementById('glossarySearch').addEventListener('input',()=>{ renderGlossaryList(); });
+
+// 作業マニュアル
+const MANUAL_DATA = [
+  {cat:"塩ビ管施工",items:[
+    {title:"VU管（排水用）の施工ポイント",content:"・勾配確保が最重要（1/50〜1/100）\n・接着部は必ず清拭してから接着\n・挿入長さを正確にマーキング\n・埋戻し時は均し砂を敷いて管を保護\n・接着剤は塗布後30〜60秒保持"},
+    {title:"VP/HIVP管（給水用）の施工ポイント",content:"・水源の確認（市水道・井戸・加圧給水）が必須\n・クロスコネクション（異水源接続）は絶対禁止\n・接着後は必ず圧力試験を実施\n・HIVP管は耐衝撃性があり給水管に最適"},
+    {title:"HT管（耐熱塩ビ）の施工ポイント",content:"・熱伸縮が非常に大きい（VP管の約5倍）\n・直線配管での両端拘束は厳禁\n・露出配管では「逃げ」のルート取りが必要\n・保温材は必須\n・色は茶色で識別可能"}
+  ]},
+  {cat:"銅管施工",items:[
+    {title:"ロウ付けの基本手順",content:"1. 管と継手をペーパーで研磨・脱脂\n2. フラックスを均一に塗布\n3. トーチで適正温度まで加熱\n4. ロウ材を当て、毛細管現象で吸わせる\n5. 施工後にフラックスを温水で洗浄\n\n※フラックス残留は孔食の原因"},
+    {title:"異種金属接触の注意",content:"・銅管と亜鉛メッキ鋼管の直接接続は電食の原因\n・絶縁継手を使用すること\n・銅とステンレスは電位差が小さく問題少ない"}
+  ]},
+  {cat:"ポリ管施工",items:[
+    {title:"架橋ポリエチレン管の施工",content:"・専用カッターで直角切断が基本\n・差し込み量の管理が最重要\n・ワンタッチ継手は施工性に優れるが斜め切断・バリ残りは漏水の原因\n・製品ごとの最小曲げ半径を遵守"},
+    {title:"用途別の管種選定",content:"・PE: 一般給水\n・PP: 耐熱性向上\n・HPPE: 高圧対応\n・加圧給水や井戸ポンプ使用時は耐圧に余裕のある管種を選定"}
+  ]},
+  {cat:"バルブ選定",items:[
+    {title:"バルブの種類と用途",content:"・ボール弁: 開閉が速い。全開時の圧力損失少ない。給水・給湯に広く使用\n・ゲート弁: 全開時の抵抗が最小。幹線・受水槽周りに多用。流量調整には不向き\n・グローブ弁: 流量の微調整が可能。圧力損失は大きい\n・チェック弁: 逆流防止専用。設置方向を厳守\n・バタフライ弁: 大口径・軽量。空調・冷却水に多い\n・電動弁: 自動制御用途。空調機や熱交換器周りに使用"}
+  ]},
+  {cat:"安全管理",items:[
+    {title:"KY活動の4ラウンド法",content:"第1R: 現状把握（どんな危険があるか）\n第2R: 本質追究（危険のポイントを絞り込む）\n第3R: 対策樹立（あなたならどうする）\n第4R: 目標設定（私たちはこうする）"},
+    {title:"高所作業の基本ルール",content:"・2m以上の作業ではフルハーネス型墜落制止用器具を使用\n・作業床の設置が困難な場所では特別教育が必要\n・安全ネット・親綱の設置\n・工具の落下防止措置（コード・工具袋）"},
+    {title:"酸素欠乏作業の注意",content:"・酸素濃度18%未満で酸素欠乏症のリスク\n・貯水槽・排水槽の内部作業は要注意\n・酸素濃度計による測定を作業前に実施\n・換気の実施と監視人の配置が必須"}
+  ]},
+  {cat:"法令基準",items:[
+    {title:"残留塩素の基準",content:"・遊離残留塩素: 0.1mg/L以上（水道法）\n・結合残留塩素: 0.4mg/L以上\n・測定にはDPD試薬を使用（ピンク色に発色）"},
+    {title:"受水槽の管理基準",content:"・有効容量10m³超: 簡易専用水道（年1回清掃・検査義務）\n・有効容量10m³以下: 小規模貯水槽水道（条例で規制）\n・マンホール: 内径60cm以上\n・6面点検空間: 上部100cm以上、側面・底部60cm以上"},
+    {title:"排水管の勾配基準",content:"・管径65mm: 1/50以上\n・管径75〜100mm: 1/100以上\n・管径125mm: 1/150以上\n・管径150mm: 1/200以上\n・管径200mm: 1/200以上"}
+  ]}
+];
+
+document.getElementById('manualBtn').addEventListener('click',()=>{
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('manualScreen').style.display='block';
+  window.scrollTo(0,0);
+  renderManual();
+});
+document.getElementById('manualBack').addEventListener('click',()=>{
+  document.getElementById('manualScreen').style.display='none';
+  document.getElementById('startScreen').style.display='block';
+  window.scrollTo(0,0);
+});
+
+function renderManual(){
+  const cats = MANUAL_DATA.map(m=>m.cat);
+  const catsEl = document.getElementById('manualCats');
+  let activeCat = null;
+  catsEl.innerHTML = '<button class="glossary-cat-btn active" data-cat="">すべて</button>' +
+    cats.map(c=>'<button class="glossary-cat-btn" data-cat="'+c+'">'+c+'</button>').join('');
+  catsEl.querySelectorAll('.glossary-cat-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      catsEl.querySelectorAll('.glossary-cat-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat = btn.dataset.cat || null;
+      renderManualItems(activeCat);
+    });
+  });
+  renderManualItems(null);
+}
+
+function renderManualItems(cat){
+  const el = document.getElementById('manualContent');
+  let items = [];
+  MANUAL_DATA.forEach(m=>{
+    if(cat && m.cat !== cat) return;
+    m.items.forEach(item=>items.push({...item,cat:m.cat}));
+  });
+  el.innerHTML = items.map(item=>
+    '<div class="glossary-item"><div class="glossary-item-header"><span>'+item.title+'<span class="glossary-item-tag genre-badge" style="font-size:10px;padding:2px 8px;">'+item.cat+'</span></span><span class="arrow">▶</span></div><div class="glossary-item-body"><pre style="white-space:pre-wrap;font-family:inherit;margin:0;">'+item.content+'</pre></div></div>'
+  ).join('');
+  el.querySelectorAll('.glossary-item-header').forEach(h=>{
+    h.addEventListener('click',()=>{
+      const body = h.nextElementSibling;
+      const arrow = h.querySelector('.arrow');
+      body.classList.toggle('show');
+      arrow.classList.toggle('open');
+    });
+  });
+}
 
 // ユーザー名の保存・復元
 const savedName=localStorage.getItem('userName')||'';
