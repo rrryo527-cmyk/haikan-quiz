@@ -8,18 +8,18 @@
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Oswald:wght@600;700&display=swap');
 
   :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --surface2: #1c2330;
-    --border: #30363d;
-    --accent: #f0a500;
-    --accent2: #e05c00;
-    --text: #e6edf3;
-    --text-muted: #8b949e;
-    --correct: #2ea043;
-    --correct-bg: #0d2818;
-    --wrong: #da3633;
-    --wrong-bg: #2d1117;
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface2: #f7f8fa;
+    --border: #d0d7de;
+    --accent: #e67e00;
+    --accent2: #c05500;
+    --text: #1f2328;
+    --text-muted: #656d76;
+    --correct: #1a7f37;
+    --correct-bg: #dafbe1;
+    --wrong: #cf222e;
+    --wrong-bg: #ffebe9;
     --pipe: #4a90a4;
   }
 
@@ -28,7 +28,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -42,10 +42,10 @@
     position: fixed;
     inset: 0;
     background:
-      linear-gradient(90deg, transparent 49.5%, #1a2530 49.5%, #1a2530 50.5%, transparent 50.5%),
-      linear-gradient(0deg, transparent 49.5%, #1a2530 49.5%, #1a2530 50.5%, transparent 50.5%);
+      linear-gradient(90deg, transparent 49.5%, #dce3ea 49.5%, #dce3ea 50.5%, transparent 50.5%),
+      linear-gradient(0deg, transparent 49.5%, #dce3ea 49.5%, #dce3ea 50.5%, transparent 50.5%);
     background-size: 80px 80px;
-    opacity: 0.3;
+    opacity: 0.4;
     pointer-events: none;
     z-index: 0;
   }
@@ -73,7 +73,7 @@
   }
 
   .header h1 {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     font-weight: 900;
     font-size: 28px;
     color: var(--text);
@@ -96,6 +96,7 @@
     border-radius: 12px;
     padding: 40px;
     margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
   .start-card h2 {
@@ -150,14 +151,14 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     transition: all 0.2s;
   }
 
   .count-btn:hover, .count-btn.selected {
     border-color: var(--accent);
     color: var(--accent);
-    background: rgba(240,165,0,0.08);
+    background: rgba(230,126,0,0.08);
   }
 
   /* ボタン */
@@ -170,14 +171,14 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     transition: all 0.2s;
     letter-spacing: 1px;
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(240,165,0,0.3);
+    box-shadow: 0 8px 20px rgba(230,126,0,0.3);
   }
 
   .btn-secondary {
@@ -188,7 +189,7 @@
     border: 1px solid var(--border);
     border-radius: 8px;
     cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     transition: all 0.2s;
     margin-top: 12px;
   }
@@ -255,6 +256,7 @@
     border-radius: 12px;
     padding: 28px;
     margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
   .q-meta {
@@ -271,9 +273,9 @@
     font-weight: 500;
   }
 
-  .cat-water { background: rgba(78,160,220,0.15); color: #4ea0dc; border: 1px solid rgba(78,160,220,0.3); }
-  .cat-law { background: rgba(200,100,200,0.15); color: #c864c8; border: 1px solid rgba(200,100,200,0.3); }
-  .cat-tool { background: rgba(80,200,120,0.15); color: #50c878; border: 1px solid rgba(80,200,120,0.3); }
+  .cat-water { background: rgba(30,120,190,0.1); color: #1a6fb5; border: 1px solid rgba(30,120,190,0.3); }
+  .cat-law { background: rgba(160,60,160,0.1); color: #9c3c9c; border: 1px solid rgba(160,60,160,0.3); }
+  .cat-tool { background: rgba(40,160,80,0.1); color: #28803c; border: 1px solid rgba(40,160,80,0.3); }
 
   .q-difficulty {
     font-size: 11px;
@@ -284,11 +286,70 @@
   .difficulty-star { color: var(--accent); }
 
   .question-text {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 700;
     line-height: 1.7;
     color: var(--text);
   }
+
+  /* 問題画像 */
+  .question-image {
+    margin-top: 16px;
+    text-align: center;
+    display: none;
+  }
+
+  .question-image img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .question-image.show { display: block; }
+
+  /* ヒントボタン・ヒント表示 */
+  .hint-area {
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .hint-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .hint-btn:hover {
+    background: rgba(230,126,0,0.08);
+    border-color: var(--accent);
+  }
+
+  .hint-btn:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  .hint-text {
+    background: #fff8ed;
+    border: 1px solid #f0d9a8;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #7a5c00;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .hint-text.show { display: block; }
 
   /* 選択肢 */
   .options {
@@ -302,11 +363,11 @@
     background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 14px 18px;
+    padding: 16px 20px;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 14px;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     text-align: left;
     transition: all 0.15s;
     display: flex;
@@ -317,7 +378,8 @@
 
   .option-btn:hover:not(:disabled) {
     border-color: var(--accent);
-    background: rgba(240,165,0,0.06);
+    background: rgba(230,126,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
   .option-label {
@@ -337,7 +399,7 @@
   .option-btn.correct {
     border-color: var(--correct);
     background: var(--correct-bg);
-    color: #3fb950;
+    color: #1a7f37;
   }
 
   .option-btn.correct .option-label {
@@ -349,7 +411,7 @@
   .option-btn.wrong {
     border-color: var(--wrong);
     background: var(--wrong-bg);
-    color: #f85149;
+    color: #cf222e;
   }
 
   .option-btn.wrong .option-label {
@@ -363,10 +425,11 @@
   /* 解説 */
   .explanation {
     background: var(--surface2);
+    border: 1px solid var(--border);
     border-left: 3px solid var(--accent);
     border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    font-size: 13px;
+    padding: 16px 20px;
+    font-size: 15px;
     line-height: 1.8;
     color: var(--text-muted);
     margin-bottom: 16px;
@@ -387,7 +450,7 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
     transition: all 0.2s;
     display: none;
   }
@@ -408,6 +471,7 @@
     border-radius: 12px;
     padding: 40px;
     margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
   .result-score {
@@ -479,13 +543,13 @@
         <span class="tag active">📋 建築設備の法規・資格</span>
         <span class="tag active">🔨 工具・材料・施工方法</span>
       </div>
-      <p>全250問超の問題からランダムに出題します。<br>出題数を選んでスタートしてください。</p>
+      <p>全217問の問題からランダムに出題します。<br>出題数を選んでスタートしてください。</p>
       <div class="count-selector">
         <button class="count-btn selected" data-count="10">10問</button>
         <button class="count-btn" data-count="20">20問</button>
         <button class="count-btn" data-count="30">30問</button>
         <button class="count-btn" data-count="50">50問</button>
-        <button class="count-btn" data-count="200">全問</button>
+        <button class="count-btn" data-count="9999">全問</button>
       </div>
       <button class="btn-primary" id="startBtn">クイズを始める</button>
     </div>
@@ -504,6 +568,11 @@
         <span class="q-difficulty" id="qDifficulty">★☆☆</span>
       </div>
       <div class="question-text" id="questionText">問題テキスト</div>
+      <div class="question-image" id="questionImage"><img id="questionImg" src="" alt="問題画像"></div>
+      <div class="hint-area">
+        <button class="hint-btn" id="hintBtn">💡 ヒントを見る</button>
+        <div class="hint-text" id="hintText"></div>
+      </div>
     </div>
     <div class="options" id="optionsContainer"></div>
     <div class="explanation" id="explanation"></div>
@@ -556,7 +625,7 @@ const ALL_QUESTIONS = [
 {q:"給水管の流速の上限として一般的に推奨される値はどれか？",o:["0.5m/s","2m/s","5m/s","10m/s"],a:1,cat:0,d:2,ex:"給水管内の流速は一般に2m/s以下が推奨されます。これを超えると騒音やウォーターハンマーが発生しやすくなります。"},
 {q:"排水トラップの種類のうち、洗面器や浴槽に最もよく使用されるものはどれか？",o:["Pトラップ","Sトラップ","ドラムトラップ","グリーストラップ"],a:0,cat:0,d:1,ex:"Pトラップは壁排水に対応した一般的なトラップです。洗面器・浴槽等に広く使用されます。"},
 {q:"最も一般的なねじ接合に使用するシール材はどれか？",o:["生麻とシール剤（液体シール）","ゴムパッキン","ハンダ","接着剤"],a:0,cat:0,d:1,ex:"ねじ接合では生麻（または麻糸）とシール剤を組み合わせてシールするか、液体シール（シールテープ＋シール剤）を用います。"},
-{q:"排水立て管に設けるオフセットとは何か？",o:["立て管の途中に設ける水平管部分","立て管の最下部に設ける曲管","立て管の最上部に設ける通気弁","立て管の途中に設ける掃除口"],a:0,cat:0,d:3,ex:"オフセットとは排水立て管の途中で建物構造上の都合等により管が水平方向に偏移する部分です。"),
+{q:"排水立て管に設けるオフセットとは何か？",o:["立て管の途中に設ける水平管部分","立て管の最下部に設ける曲管","立て管の最上部に設ける通気弁","立て管の途中に設ける掃除口"],a:0,cat:0,d:3,ex:"オフセットとは排水立て管の途中で建物構造上の都合等により管が水平方向に偏移する部分です。"},
 {q:"給水設備で「バキュームブレーカー」を設ける目的はどれか？",o:["水圧を一定に保つ","逆サイホン作用による逆流を防ぐ","流量を調節する","水撃を防ぐ"],a:1,cat:0,d:2,ex:"バキュームブレーカーは負圧が生じた場合に自動的に大気を取り入れ、逆サイホン作用による逆流（汚染水の逆流）を防ぐ器具です。"},
 {q:"雨水排水管と汚水排水管を分けて配管する方式を何というか？",o:["単式排水","合流式排水","分流式排水","複流式排水"],a:2,cat:0,d:1,ex:"分流式は汚水（生活排水）と雨水を別々の系統で排水する方式です。下水道への負担軽減や処理効率の向上が目的です。"},
 {q:"水道メーターは通常、誰の管理とされるか？",o:["建物所有者","入居者（使用者）","水道事業者（市区町村等）","指定給水装置工事事業者"],a:2,cat:0,d:1,ex:"水道メーターは水道事業者の所有物であり、維持管理も水道事業者が行います。"},
@@ -811,6 +880,22 @@ function startQuiz(count) {
   showQuestion();
 }
 
+// ヒント自動生成：解説の最初の部分からヒントを生成（正解テキストは伏せ字にする）
+function getHint(q) {
+  if(q.h) return q.h; // 手動ヒントがあればそちらを使用
+  const ex = q.ex;
+  const firstPart = ex.split('。')[0];
+  const correctText = q.o[q.a];
+  let hint = firstPart;
+  // 正解のテキストがヒントに含まれていたら「○○○」に置換
+  if(correctText && hint.includes(correctText)) {
+    hint = hint.replace(correctText, '○○○');
+  }
+  if(hint.length > 50) hint = hint.substring(0, 50) + '…';
+  else hint += '。';
+  return hint;
+}
+
 function showQuestion() {
   const q = questions[currentIdx];
   answered = false;
@@ -826,6 +911,25 @@ function showQuestion() {
   const stars = '★'.repeat(q.d) + '☆'.repeat(3-q.d);
   document.getElementById('qDifficulty').textContent = stars;
   document.getElementById('questionText').textContent = q.q;
+
+  // 画像表示
+  const imgArea = document.getElementById('questionImage');
+  const imgEl = document.getElementById('questionImg');
+  if(q.img) {
+    imgEl.src = q.img;
+    imgArea.className = 'question-image show';
+  } else {
+    imgEl.src = '';
+    imgArea.className = 'question-image';
+  }
+
+  // ヒントリセット
+  const hintBtn = document.getElementById('hintBtn');
+  const hintText = document.getElementById('hintText');
+  hintBtn.disabled = false;
+  hintBtn.textContent = '💡 ヒントを見る';
+  hintText.className = 'hint-text';
+  hintText.innerHTML = '';
 
   const opts = document.getElementById('optionsContainer');
   opts.innerHTML = '';
@@ -856,11 +960,6 @@ function selectAnswer(clickedIdx, origIdx, q) {
     btns[clickedIdx].classList.add('correct');
   } else {
     btns[clickedIdx].classList.add('wrong');
-    // 正解を表示
-    btns.forEach((b,i)=>{
-      const origI = q.o.indexOf(q.o[i]); // 同一順なので
-      if(i===q.a) b.classList.add('correct');
-    });
     // 正解のボタンに正解マークを付ける
     btns[q.a].classList.add('correct');
   }
@@ -871,6 +970,17 @@ function selectAnswer(clickedIdx, origIdx, q) {
   document.getElementById('nextBtn').classList.add('show');
   document.getElementById('scoreCount').textContent = score;
 }
+
+// ヒントボタン
+document.getElementById('hintBtn').addEventListener('click',()=>{
+  const q = questions[currentIdx];
+  const hintText = document.getElementById('hintText');
+  const hintBtn = document.getElementById('hintBtn');
+  hintText.innerHTML = '💡 ' + getHint(q);
+  hintText.classList.add('show');
+  hintBtn.disabled = true;
+  hintBtn.textContent = 'ヒント表示済み';
+});
 
 document.getElementById('nextBtn').addEventListener('click',()=>{
   currentIdx++;
