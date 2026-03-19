@@ -761,10 +761,15 @@ document.getElementById('adminBtn').addEventListener('click',()=>{
   document.getElementById('adminScreen').style.display='block';
   _adminView='list';
   _adminSelectedUser=null;
-  // Firestoreから最新の成績データを再取得してから表示
-  db.collection('results').get().then(function(snap){
+  // Firestoreから最新のアカウント＋成績データを再取得してから表示
+  Promise.all([
+    db.collection('accounts').get(),
+    db.collection('results').get()
+  ]).then(function(snaps){
+    _cachedAccounts={};
+    snaps[0].forEach(function(doc){_cachedAccounts[doc.id]=doc.data();});
     _cachedAllUsersData={};
-    snap.forEach(function(doc){_cachedAllUsersData[doc.id]=doc.data().records||[];});
+    snaps[1].forEach(function(doc){_cachedAllUsersData[doc.id]=doc.data().records||[];});
     renderAdminDashboard();
   }).catch(function(){renderAdminDashboard();});
   window.scrollTo(0,0);
@@ -789,12 +794,21 @@ function renderAdminList(){
   document.getElementById('adminTitle').textContent='🔒 管理者ダッシュボード';
   const data=_cachedAllUsersData;
   const el=document.getElementById('adminContent');
-  const users=Object.keys(data);
+  // 成績データのあるユーザー + 登録済みアカウント（成績なし含む）を統合
+  const allNames=new Set(Object.keys(data));
+  Object.keys(_cachedAccounts).forEach(function(n){ allNames.add(n); });
+  // 管理者は除外
+  allNames.delete(_AH.name);
+  const users=Array.from(allNames);
   if(users.length===0){el.innerHTML='<div class="glossary-empty">まだユーザーデータがありません。</div>';return;}
 
   // Compute user stats
   const stats=users.map(u=>{
-    const r=data[u],total=r.length,tq=r.reduce((s,x)=>s+x.total,0),tc=r.reduce((s,x)=>s+x.score,0);
+    const r=data[u]||[];
+    if(r.length===0){
+      return {name:u,total:0,tq:0,tc:0,avgPct:0,recentPct:0,last:new Date((_cachedAccounts[u]&&_cachedAccounts[u].created)||0),streak:0,records:[]};
+    }
+    const total=r.length,tq=r.reduce((s,x)=>s+x.total,0),tc=r.reduce((s,x)=>s+x.score,0);
     const avgPct=Math.round(r.reduce((s,x)=>s+x.pct,0)/total);
     const last=new Date(r[r.length-1].date);
     const recent=r.slice(-5);
@@ -840,17 +854,17 @@ function renderAdminList(){
   // User cards
   h+='<div id="adminUserList">';
   stats.forEach((u,idx)=>{
-    const color=u.avgPct>=70?'var(--correct)':u.avgPct>=50?'var(--accent)':'var(--wrong)';
+    const color=u.total>0?(u.avgPct>=70?'var(--correct)':u.avgPct>=50?'var(--accent)':'var(--wrong)'):'var(--text-muted)';
     const rankCls=idx===0?'gold':idx===1?'silver':idx===2?'bronze':'normal';
-    const ds=u.last.getFullYear()+'/'+(u.last.getMonth()+1)+'/'+u.last.getDate();
-    const trend=u.recentPct>u.avgPct?'📈':'📉';
+    const ds=u.total>0?(u.last.getFullYear()+'/'+(u.last.getMonth()+1)+'/'+u.last.getDate()):'未挑戦';
+    const trend=u.total>0?(u.recentPct>u.avgPct?'📈':'📉'):'';
     h+='<div class="admin-user-card" data-user="'+u.name+'">';
     h+='<div class="admin-user-row">';
     h+='<div style="display:flex;align-items:center;"><span class="admin-rank '+rankCls+'">'+(idx+1)+'</span>';
     h+='<div><div class="admin-user-name">'+u.name+'</div>';
-    h+='<div class="admin-user-meta">挑戦: '+u.total+'回 | '+u.tq+'問回答 | 最終: '+ds+' '+trend+'</div></div></div>';
-    h+='<div style="text-align:right;"><div class="admin-user-pct" style="color:'+color+'">'+u.avgPct+'%</div>';
-    h+='<div class="admin-user-pct-label">平均正答率</div></div>';
+    h+='<div class="admin-user-meta">'+(u.total>0?'挑戦: '+u.total+'回 | '+u.tq+'問回答 | 最終: '+ds+' '+trend:'まだ挑戦していません')+'</div></div></div>';
+    h+='<div style="text-align:right;"><div class="admin-user-pct" style="color:'+color+'">'+(u.total>0?u.avgPct+'%':'—')+'</div>';
+    h+='<div class="admin-user-pct-label">'+(u.total>0?'平均正答率':'未挑戦')+'</div></div>';
     h+='</div></div>';
   });
   h+='</div>';
@@ -886,8 +900,22 @@ function renderAdminDetail(userName){
   _adminView='detail';
   document.getElementById('adminTitle').textContent='👤 '+userName;
   const data=_cachedAllUsersData;
-  const records=data[userName];
-  if(!records||records.length===0){document.getElementById('adminContent').innerHTML='<div class="glossary-empty">データがありません。</div>';return;}
+  const records=data[userName]||[];
+  if(records.length===0){
+    const el=document.getElementById('adminContent');
+    let h='<div class="admin-detail-header">';
+    h+='<div class="admin-detail-avatar">'+userName.charAt(0).toUpperCase()+'</div>';
+    h+='<div><div class="admin-detail-name">'+userName+'</div>';
+    h+='<div style="font-size:12px;color:var(--text-muted);">まだクイズに挑戦していません</div></div>';
+    h+='</div>';
+    h+='<div style="margin-top:24px;text-align:center;">';
+    h+='<button class="btn-secondary" id="adminDeleteUserBtn" style="border-color:var(--wrong);color:var(--wrong);">🗑️ このアカウントを削除</button>';
+    h+='</div>';
+    el.innerHTML=h;
+    var delBtn=document.getElementById('adminDeleteUserBtn');
+    if(delBtn)delBtn.addEventListener('click',function(){ adminDeleteAccount(userName); });
+    return;
+  }
   const el=document.getElementById('adminContent');
 
   const totalAttempts=records.length,tq=records.reduce((s,r)=>s+r.total,0),tc=records.reduce((s,r)=>s+r.score,0);
