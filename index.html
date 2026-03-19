@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>FacilityIQ</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
 <style>
@@ -226,7 +226,7 @@
   .glossary-header h2 { font-size: 20px; font-weight: 700; color: var(--accent); }
   .glossary-back { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 13px; }
   .glossary-back:hover { border-color: var(--accent); color: var(--accent); }
-  .glossary-search { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 12px; background: var(--surface); color: var(--text); }
+  .glossary-search { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; font-family: inherit; margin-bottom: 12px; background: var(--surface); color: var(--text); }
   .glossary-search:focus { outline: none; border-color: var(--accent); }
   .glossary-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
   .glossary-cat-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 12px; font-family: inherit; transition: all 0.2s; }
@@ -1686,15 +1686,18 @@ function renderRankingFromCache(){
     localStorage.setItem('_secLog',JSON.stringify(attempts));
   };
 })();
-// 横スクロール完全禁止
-document.addEventListener('touchmove',function(e){
-  if(Math.abs(e.touches[0].clientX-(_lastTouchX||e.touches[0].clientX))>Math.abs(e.touches[0].clientY-(_lastTouchY||e.touches[0].clientY))){
-    if(!e.target.closest('.lightbox-img-container'))e.preventDefault();
-  }
-},{passive:false});
-document.addEventListener('touchstart',function(e){_lastTouchX=e.touches[0].clientX;_lastTouchY=e.touches[0].clientY;},{passive:true});
-var _lastTouchX=0,_lastTouchY=0;
+// 横スクロール・ズーム完全禁止
 window.addEventListener('scroll',function(){if(window.scrollX!==0)window.scrollTo(0,window.scrollY);});
+// input focus時のズーム防止
+document.querySelectorAll('input,select,textarea').forEach(function(el){
+  el.addEventListener('focus',function(){setTimeout(function(){window.scrollTo(0,window.scrollY);},300);});
+});
+// 動的に追加されるinputにも対応
+document.addEventListener('focusin',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA'){
+    setTimeout(function(){window.scrollTo(0,window.scrollY);},300);
+  }
+});
 </script>
 </body>
 </html>
