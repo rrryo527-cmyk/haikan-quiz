@@ -659,11 +659,48 @@ saveHistory=function(total,score,pct){
   saveUserResult(name);
 };
 
-// 管理者ボタン（非表示・互換性のため残す）
-document.getElementById('adminBtn').addEventListener('click',()=>{});
+// 管理者ログイン
+document.getElementById('adminBtn').addEventListener('click',()=>{
+  const isLinkedAdmin = checkAdminAccount(_currentAccount);
+  if(isLinkedAdmin) {
+    // Already authenticated as admin via linked account
+    document.getElementById('startScreen').style.display='none';
+    document.getElementById('adminScreen').style.display='block';
+    window.scrollTo(0,0);
+    renderAdminDashboard();
+    return;
+  }
+  const now=Date.now();
+  if(now<_lockoutUntil){
+    const remaining=Math.ceil((_lockoutUntil-now)/1000);
+    alert('セキュリティロック中です。'+remaining+'秒後に再試行してください。');
+    return;
+  }
+  const id=prompt('管理者IDを入力してください:');
+  if(!id)return;
+  const pw=prompt('パスワードを入力してください:');
+  if(id===_AH.id&&pw===_AH.p){
+    _loginAttempts=0;
+    // Link current account as admin
+    if(_currentAccount) localStorage.setItem('adminLinkedName', _currentAccount);
+    document.getElementById('startScreen').style.display='none';
+    document.getElementById('adminScreen').style.display='block';
+    window.scrollTo(0,0);
+    renderAdminDashboard();
+  }else{
+    _loginAttempts++;
+    if(_loginAttempts>=MAX_LOGIN_ATTEMPTS){
+      _lockoutUntil=Date.now()+LOCKOUT_DURATION;
+      _loginAttempts=0;
+      alert('ログイン試行回数が上限に達しました。5分間ロックされます。');
+    }else{
+      alert('IDまたはパスワードが正しくありません。(残り試行回数: '+(MAX_LOGIN_ATTEMPTS-_loginAttempts)+')');
+    }
+  }
+});
 document.getElementById('adminBack').addEventListener('click',()=>{
   if(_adminView==='detail'){_adminView='list';_adminSelectedUser=null;renderAdminDashboard();window.scrollTo(0,0);}
-  else{document.getElementById('adminScreen').style.display='none';document.getElementById('loginScreen').style.display='block';_currentAccount=null;renderLoginScreen();window.scrollTo(0,0);}
+  else{document.getElementById('adminScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);}
 });
 
 let _adminView='list';
@@ -956,7 +993,7 @@ document.getElementById('showWrongBtn').addEventListener('click',()=>{
 
 // 管理者機能
 // Security: Hashed credentials + rate limiting
-const _AH={id:'a]r]a]k]i]0]5]2]7'.split(']').join(''),p:'8]1]2]0]9]3]7]3'.split(']').join(''),name:'荒]木]稜'.split(']').join('')};
+const _AH={id:'a]r]a]k]i]0]5]2]7'.split(']').join(''),p:'1]9]9]2]0]5]2]7'.split(']').join('')};
 let _loginAttempts=0;
 let _lockoutUntil=0;
 const MAX_LOGIN_ATTEMPTS=5;
@@ -1082,14 +1119,6 @@ function doLogin() {
   if (!name) { showError('名前を入力してください。'); return; }
   if (!pass) { showError('パスワードを入力してください。'); return; }
 
-  // 管理者名でのログイン判定
-  if (name === _AH.name && pass === _AH.p) {
-    _loginAttempts = 0;
-    localStorage.setItem('lastLoginUser', name);
-    loginAsAdmin();
-    return;
-  }
-
   const accounts = getAccounts();
   if (!accounts[name]) { showError('このアカウントは存在しません。'); return; }
   if (accounts[name].pass !== pass) { showError('パスワードが正しくありません。'); return; }
@@ -1103,21 +1132,13 @@ function loginAs(name) {
   document.getElementById('userNameInput').value = name;
   document.getElementById('welcomeUserName').textContent = '👤 ' + name + ' さん';
 
-  document.getElementById('adminBtn').style.display = 'none';
+  // Show/hide admin button based on admin credentials
+  const isAdmin = (name === _AH.id || checkAdminAccount(name));
+  document.getElementById('adminBtn').style.display = isAdmin ? '' : 'none';
 
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('startScreen').style.display = 'block';
   window.scrollTo(0, 0);
-}
-
-function loginAsAdmin() {
-  _currentAccount = _AH.name;
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminScreen').style.display = 'block';
-  window.scrollTo(0, 0);
-  _adminView = 'list';
-  _adminSelectedUser = null;
-  renderAdminDashboard();
 }
 
 function checkAdminAccount(name) {
