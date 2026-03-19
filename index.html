@@ -478,8 +478,13 @@
       <button class="glossary-back" id="historyBack">← 戻る</button>
       <h2>📊 成績履歴</h2>
     </div>
+    <div id="growthChart" style="margin-bottom:20px;"></div>
+    <div id="genreAnalysis" style="margin-bottom:20px;"></div>
+    <div style="margin-bottom:16px;">
+      <button class="btn-secondary" id="retryWrongBtn" style="width:100%;background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border-color:var(--wrong);color:var(--wrong);">🔄 間違えた問題に再チャレンジ</button>
+    </div>
     <div id="historyContent"></div>
-    <button class="btn-secondary" id="clearHistoryBtn" style="margin-top:16px;">🗑 履歴をクリア</button>
+    <button class="btn-secondary" id="clearHistoryBtn" style="margin-top:16px;display:none;">🗑 履歴をクリア</button>
   </div>
 
   <div id="quizScreen">
@@ -1518,13 +1523,120 @@ document.getElementById('historyBack').addEventListener('click',()=>{
 document.getElementById('clearHistoryBtn').addEventListener('click',()=>{
   if(confirm('履歴をすべて削除しますか？')){var u=_currentAccount||'匿名';_cachedHistory[u]=[];db.collection('history').doc(u).delete().catch(function(e){});renderHistory();}
 });
+// 履歴クリアは管理者のみ表示
+function updateClearHistoryVisibility(){
+  const btn=document.getElementById('clearHistoryBtn');
+  if(btn)btn.style.display=_isAdmin?'':'none';
+}
+// 間違えた問題に再チャレンジ
+document.getElementById('retryWrongBtn').addEventListener('click',function(){
+  const saved=JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
+  if(saved.length===0){alert('間違えた問題がありません。');return;}
+  // 間違えた問題のテキストでALL_QUESTIONSから元の問題を探す
+  const retryPool=[];
+  const seen=new Set();
+  saved.forEach(function(wq){
+    const found=ALL_QUESTIONS.find(function(q){return q.q===wq.q;});
+    if(found&&!seen.has(found.q)){retryPool.push(found);seen.add(found.q);}
+  });
+  if(retryPool.length===0){alert('再チャレンジ可能な問題がありません。');return;}
+  questions=shuffle(retryPool);
+  currentIdx=0;score=0;selectedGenre=-1;selectedDiff=0;
+  genreStats={};GENRES.forEach(function(_,i){genreStats[i]={c:0,t:0};});
+  wrongQuestions=[];
+  document.getElementById('historyScreen').style.display='none';
+  document.getElementById('quizScreen').style.display='block';
+  document.getElementById('qTotal').textContent=questions.length;
+  window.scrollTo(0,0);showQuestion();startQuizTimer();
+});
 const DIFF_LABELS=['すべて','Easy','Normal','Hard'];
 const DIFF_COLORS=['var(--text-muted)','var(--correct)','var(--accent)','var(--wrong)'];
 function renderHistory(){
+  updateClearHistoryVisibility();
   const h=getHistory();
   const el=document.getElementById('historyContent');
-  if(h.length===0){el.innerHTML='<div class="glossary-empty">まだ履歴がありません。クイズに挑戦しましょう！</div>';return;}
-  const rows=h.slice().reverse().map(r=>{
+  const growthEl=document.getElementById('growthChart');
+  const genreEl=document.getElementById('genreAnalysis');
+  if(h.length===0){
+    el.innerHTML='<div class="glossary-empty">まだ履歴がありません。クイズに挑戦しましょう！</div>';
+    growthEl.innerHTML='';genreEl.innerHTML='';return;
+  }
+  // === 成長推移グラフ ===
+  const dailyData={};
+  h.forEach(function(r){
+    const d=new Date(r.date);
+    const key=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate();
+    if(!dailyData[key])dailyData[key]={totalScore:0,totalQ:0,count:0};
+    dailyData[key].totalScore+=r.score;
+    dailyData[key].totalQ+=r.total;
+    dailyData[key].count++;
+  });
+  const days=Object.keys(dailyData).sort();
+  const recentDays=days.slice(-14);
+  if(recentDays.length>=2){
+    const maxPct=100;
+    let chartHtml='<div class="start-card" style="padding:16px;"><h3 style="font-size:14px;margin-bottom:12px;color:var(--accent);">📈 正答率の推移（直近14日）</h3>';
+    chartHtml+='<div style="display:flex;align-items:flex-end;gap:4px;height:120px;padding-bottom:24px;position:relative;">';
+    recentDays.forEach(function(day){
+      const dd=dailyData[day];
+      const pct=dd.totalQ>0?Math.round(dd.totalScore/dd.totalQ*100):0;
+      const barH=Math.max(4,Math.round(pct/maxPct*100));
+      const color=pct>=70?'var(--correct)':pct>=50?'var(--accent)':'var(--wrong)';
+      const label=day.split('/').slice(1).join('/');
+      chartHtml+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;">';
+      chartHtml+='<span style="font-size:10px;font-weight:700;color:'+color+';margin-bottom:2px;">'+pct+'%</span>';
+      chartHtml+='<div style="width:100%;height:'+barH+'px;background:'+color+';border-radius:4px 4px 0 0;min-width:8px;"></div>';
+      chartHtml+='<span style="font-size:8px;color:var(--text-muted);margin-top:4px;white-space:nowrap;">'+label+'</span>';
+      chartHtml+='</div>';
+    });
+    chartHtml+='</div>';
+    // 成長判定
+    if(recentDays.length>=3){
+      const first3=recentDays.slice(0,3).reduce(function(s,d){var dd=dailyData[d];return s+(dd.totalQ>0?dd.totalScore/dd.totalQ:0);},0)/3;
+      const last3=recentDays.slice(-3).reduce(function(s,d){var dd=dailyData[d];return s+(dd.totalQ>0?dd.totalScore/dd.totalQ:0);},0)/3;
+      const diff=Math.round((last3-first3)*100);
+      if(diff>5)chartHtml+='<div style="text-align:center;font-size:13px;color:var(--correct);font-weight:700;">🎉 正答率が'+diff+'%向上しています！</div>';
+      else if(diff>0)chartHtml+='<div style="text-align:center;font-size:13px;color:var(--accent);font-weight:700;">📈 少しずつ成長しています！</div>';
+      else chartHtml+='<div style="text-align:center;font-size:13px;color:var(--text-muted);">💪 継続して学習しましょう！</div>';
+    }
+    chartHtml+='</div>';
+    growthEl.innerHTML=chartHtml;
+  }else{growthEl.innerHTML='';}
+  // === ジャンル別得意不得意 ===
+  const genreData={};
+  h.forEach(function(r){
+    if(r.genre===-1)return;
+    if(!genreData[r.genre])genreData[r.genre]={score:0,total:0,count:0};
+    genreData[r.genre].score+=r.score;
+    genreData[r.genre].total+=r.total;
+    genreData[r.genre].count++;
+  });
+  const genreKeys=Object.keys(genreData).sort(function(a,b){
+    var pa=genreData[a].total>0?genreData[a].score/genreData[a].total:0;
+    var pb=genreData[b].total>0?genreData[b].score/genreData[b].total:0;
+    return pb-pa;
+  });
+  if(genreKeys.length>0){
+    let gaHtml='<div class="start-card" style="padding:16px;"><h3 style="font-size:14px;margin-bottom:12px;color:var(--accent);">🎯 ジャンル別 得意・不得意</h3>';
+    genreKeys.forEach(function(g){
+      const gd=genreData[g];
+      const pct=gd.total>0?Math.round(gd.score/gd.total*100):0;
+      const color=pct>=70?'var(--correct)':pct>=50?'var(--accent)':'var(--wrong)';
+      const gInfo=GENRES[g]||{icon:'?',name:'不明'};
+      const tag=pct>=80?'得意 👑':pct>=60?'まあまあ':pct>=40?'要復習 📖':'苦手 💪';
+      gaHtml+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
+      gaHtml+='<span style="width:24px;text-align:center;">'+gInfo.icon+'</span>';
+      gaHtml+='<span style="flex:1;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+gInfo.name+'</span>';
+      gaHtml+='<div style="width:80px;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:4px;"></div></div>';
+      gaHtml+='<span style="width:36px;text-align:right;font-size:12px;font-weight:900;color:'+color+';font-family:Oswald;">'+pct+'%</span>';
+      gaHtml+='<span style="font-size:10px;width:60px;text-align:right;color:var(--text-muted);">'+tag+'</span>';
+      gaHtml+='</div>';
+    });
+    gaHtml+='</div>';
+    genreEl.innerHTML=gaHtml;
+  }else{genreEl.innerHTML='';}
+  // === 履歴一覧 ===
+  const rows=h.slice().reverse().slice(0,50).map(r=>{
     const d=new Date(r.date);
     const ds=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+' '+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
     const gn=r.genre===-1?'全ジャンル':(GENRES[r.genre]?GENRES[r.genre].icon+' '+GENRES[r.genre].name:'不明');
@@ -1534,7 +1646,7 @@ function renderHistory(){
     const color=r.pct>=70?'var(--correct)':r.pct>=50?'var(--accent)':'var(--wrong)';
     return '<div class="glossary-item" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;"><div><strong>'+ds+'</strong><br><span style="font-size:13px;color:var(--text-muted);">'+gn+'</span><br><span style="font-size:12px;font-weight:700;color:'+diffColor+';">'+diffLabel+'</span></div><div style="text-align:right;"><span style="font-size:20px;font-weight:900;color:'+color+';font-family:Oswald;">'+r.score+'/'+r.total+'</span><br><span style="font-size:12px;color:var(--text-muted);">'+r.pct+'%</span></div></div>';
   });
-  el.innerHTML=rows.join('');
+  el.innerHTML='<h3 style="font-size:14px;margin:16px 0 8px;color:var(--text-muted);">📋 直近50件の履歴</h3>'+rows.join('');
 }
 
 // ============================================================
