@@ -1686,6 +1686,15 @@ function renderRankingFromCache(){
     localStorage.setItem('_secLog',JSON.stringify(attempts));
   };
 })();
+// 横スクロール完全禁止
+document.addEventListener('touchmove',function(e){
+  if(Math.abs(e.touches[0].clientX-(_lastTouchX||e.touches[0].clientX))>Math.abs(e.touches[0].clientY-(_lastTouchY||e.touches[0].clientY))){
+    if(!e.target.closest('.lightbox-img-container'))e.preventDefault();
+  }
+},{passive:false});
+document.addEventListener('touchstart',function(e){_lastTouchX=e.touches[0].clientX;_lastTouchY=e.touches[0].clientY;},{passive:true});
+var _lastTouchX=0,_lastTouchY=0;
+window.addEventListener('scroll',function(){if(window.scrollX!==0)window.scrollTo(0,window.scrollY);});
 </script>
 </body>
 </html>
