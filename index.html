@@ -987,32 +987,14 @@ function saveAccounts(accounts) {
 }
 
 function renderLoginScreen() {
-  const accounts = getAccounts();
-  const hasAccounts = Object.keys(accounts).length > 0;
-  const lastUser = localStorage.getItem('lastLoginUser') || '';
   const area = document.getElementById('loginFormArea');
+  area.innerHTML = '<h2>🔑 ようこそ</h2>' +
+    '<p class="login-welcome">ログインまたは新規登録を選んでください。</p>' +
+    '<button class="btn-primary" id="goLogin" style="width:100%;margin-bottom:12px;">ログイン</button>' +
+    '<button class="btn-secondary" id="goRegister" style="width:100%;">新規アカウント作成</button>';
 
-  // Check if user was previously logged in
-  if (lastUser && accounts[lastUser]) {
-    // Show login form
-    area.innerHTML = '<h2>🔑 ログイン</h2>' +
-      '<p class="login-welcome">おかえりなさい！パスワードを入力してください。</p>' +
-      '<input type="text" class="login-input" id="loginName" value="' + lastUser + '" placeholder="名前" readonly style="opacity:0.7;cursor:default;">' +
-      '<input type="password" class="login-input" id="loginPass" placeholder="パスワード" autocomplete="current-password">' +
-      '<div class="login-error" id="loginError"></div>' +
-      '<button class="btn-primary" id="loginSubmit" style="width:100%;margin-bottom:8px;">ログイン</button>' +
-      '<button class="login-switch" id="switchUser">別のアカウントでログイン</button><br>' +
-      '<button class="login-switch" id="toRegister" style="margin-top:8px;">新規アカウント作成</button>';
-
-    document.getElementById('loginSubmit').addEventListener('click', doLogin);
-    document.getElementById('loginPass').addEventListener('keydown', function(e) { if(e.key==='Enter') doLogin(); });
-    document.getElementById('switchUser').addEventListener('click', showLoginSelectForm);
-    document.getElementById('toRegister').addEventListener('click', showRegisterForm);
-  } else if (hasAccounts) {
-    showLoginSelectForm();
-  } else {
-    showRegisterForm();
-  }
+  document.getElementById('goLogin').addEventListener('click', showLoginSelectForm);
+  document.getElementById('goRegister').addEventListener('click', showRegisterForm);
 }
 
 function showLoginSelectForm() {
@@ -1026,11 +1008,11 @@ function showLoginSelectForm() {
     '<input type="password" class="login-input" id="loginPass" placeholder="パスワード" autocomplete="current-password">' +
     '<div class="login-error" id="loginError"></div>' +
     '<button class="btn-primary" id="loginSubmit" style="width:100%;margin-bottom:8px;">ログイン</button>' +
-    '<button class="login-switch" id="toRegister">新規アカウント作成</button>';
+    '<button class="login-switch" id="backToTop">← 戻る</button>';
 
   document.getElementById('loginSubmit').addEventListener('click', doLogin);
   document.getElementById('loginPass').addEventListener('keydown', function(e) { if(e.key==='Enter') doLogin(); });
-  document.getElementById('toRegister').addEventListener('click', showRegisterForm);
+  document.getElementById('backToTop').addEventListener('click', renderLoginScreen);
 }
 
 function showRegisterForm() {
@@ -1039,18 +1021,13 @@ function showRegisterForm() {
     '<p class="login-welcome">漢字フルネームとパスワードを登録してください。</p>' +
     '<input type="text" class="login-input" id="regName" placeholder="漢字フルネーム（例：荒木太郎）" autocomplete="off">' +
     '<input type="password" class="login-input" id="regPass" placeholder="パスワード（4文字以上）" autocomplete="new-password">' +
-    '<input type="password" class="login-input" id="regPassConfirm" placeholder="パスワード（確認）" autocomplete="new-password">' +
     '<div class="login-error" id="loginError"></div>' +
     '<button class="btn-primary" id="regSubmit" style="width:100%;margin-bottom:8px;">アカウント作成</button>' +
-    '<button class="login-switch" id="toLogin">既にアカウントをお持ちの方</button>';
+    '<button class="login-switch" id="backToTop">← 戻る</button>';
 
   document.getElementById('regSubmit').addEventListener('click', doRegister);
-  document.getElementById('regPassConfirm').addEventListener('keydown', function(e) { if(e.key==='Enter') doRegister(); });
-  document.getElementById('toLogin').addEventListener('click', function() {
-    const accounts = getAccounts();
-    if (Object.keys(accounts).length > 0) showLoginSelectForm();
-    else { showError('まだアカウントが登録されていません。'); }
-  });
+  document.getElementById('regPass').addEventListener('keydown', function(e) { if(e.key==='Enter') doRegister(); });
+  document.getElementById('backToTop').addEventListener('click', renderLoginScreen);
 }
 
 function showError(msg) {
@@ -1067,13 +1044,11 @@ function doRegister() {
   clearError();
   const name = document.getElementById('regName').value.trim();
   const pass = document.getElementById('regPass').value;
-  const passConfirm = document.getElementById('regPassConfirm').value;
 
   if (!name) { showError('名前を入力してください。'); return; }
   const kanjiRegex = /^[\u4E00-\u9FFF\u3400-\u4DBF]+$/u;
   if (!kanjiRegex.test(name)) { showError('漢字フルネームで入力してください。（例：荒木太郎）'); return; }
   if (pass.length < 4) { showError('パスワードは4文字以上にしてください。'); return; }
-  if (pass !== passConfirm) { showError('パスワードが一致しません。'); return; }
 
   const accounts = getAccounts();
   if (accounts[name]) { showError('この名前は既に登録されています。'); return; }
