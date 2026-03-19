@@ -320,8 +320,10 @@
   .login-welcome { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
   .logout-btn { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; font-family: inherit; transition: all 0.2s; margin-top: 8px; }
   .logout-btn:hover { border-color: var(--wrong); color: var(--wrong); }
-  .user-welcome-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 10px 16px; background: var(--surface2); border-radius: 12px; border: 1px solid var(--border); }
-  .user-welcome-name { font-size: 14px; font-weight: 700; color: var(--accent2); }
+  .user-welcome-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 10px 16px; background: var(--surface2); border-radius: 12px; border: 1px solid var(--border); gap: 8px; }
+  .user-welcome-name { font-size: 14px; font-weight: 700; color: var(--accent2); flex: 1; }
+  .admin-icon-btn { background: linear-gradient(135deg, var(--accent), #8b7cf7); border: none; color: #fff; width: 36px; height: 36px; border-radius: 10px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(108,92,231,0.3); flex-shrink: 0; }
+  .admin-icon-btn:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(108,92,231,0.5); }
 
 </style>
 </head>
@@ -377,13 +379,14 @@
       <input type="hidden" id="userNameInput" value="">
       <div class="user-welcome-bar">
         <span class="user-welcome-name" id="welcomeUserName"></span>
+        <button class="admin-icon-btn" id="adminBtn" style="display:none;" title="管理者ダッシュボード">⚙️</button>
         <button class="logout-btn" id="logoutBtn">ログアウト</button>
       </div>
       <button class="btn-primary" id="startBtn">⚔️ 挑戦者</button><br>
       <button class="btn-secondary" id="glossaryBtn">📖 用語辞典を開く</button>
       <button class="btn-secondary" id="manualBtn">📋 作業マニュアル</button>
       <button class="btn-secondary" id="historyBtn">📊 成績履歴を見る</button>
-      <button class="btn-secondary" id="adminBtn" style="display:none;">📊 管理者・個人アカウント成績</button>
+      <!-- 管理者ボタンはウェルカムバー右上に移動 -->
     </div>
   </div>
 
@@ -659,11 +662,18 @@ saveHistory=function(total,score,pct){
   saveUserResult(name);
 };
 
-// 管理者ボタン（非表示・互換性のため残す）
-document.getElementById('adminBtn').addEventListener('click',()=>{});
+// 管理者ボタン → ダッシュボードへ遷移
+document.getElementById('adminBtn').addEventListener('click',()=>{
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('adminScreen').style.display='block';
+  _adminView='list';
+  _adminSelectedUser=null;
+  renderAdminDashboard();
+  window.scrollTo(0,0);
+});
 document.getElementById('adminBack').addEventListener('click',()=>{
   if(_adminView==='detail'){_adminView='list';_adminSelectedUser=null;renderAdminDashboard();window.scrollTo(0,0);}
-  else{document.getElementById('adminScreen').style.display='none';document.getElementById('loginScreen').style.display='block';_currentAccount=null;renderLoginScreen();window.scrollTo(0,0);}
+  else{document.getElementById('adminScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);}
 });
 
 let _adminView='list';
@@ -966,6 +976,7 @@ const LOCKOUT_DURATION=300000; // 5 minutes
 // アカウント管理システム
 // ============================================================
 let _currentAccount = null;
+let _isAdmin = false;
 
 function getAccounts() {
   try { return JSON.parse(localStorage.getItem('quizAccounts') || '{}'); } catch(e) { return {}; }
@@ -1100,6 +1111,9 @@ function doLogin() {
 
 function loginAs(name) {
   _currentAccount = name;
+  _isAdmin = false;
+  sessionStorage.setItem('loggedInUser', name);
+  sessionStorage.removeItem('isAdmin');
   document.getElementById('userNameInput').value = name;
   document.getElementById('welcomeUserName').textContent = '👤 ' + name + ' さん';
 
@@ -1112,12 +1126,15 @@ function loginAs(name) {
 
 function loginAsAdmin() {
   _currentAccount = _AH.name;
+  _isAdmin = true;
+  sessionStorage.setItem('loggedInUser', _AH.name);
+  sessionStorage.setItem('isAdmin', '1');
+  document.getElementById('userNameInput').value = _AH.name;
+  document.getElementById('welcomeUserName').textContent = '👤 ' + _AH.name + ' さん';
+  document.getElementById('adminBtn').style.display = '';
   document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminScreen').style.display = 'block';
+  document.getElementById('startScreen').style.display = 'block';
   window.scrollTo(0, 0);
-  _adminView = 'list';
-  _adminSelectedUser = null;
-  renderAdminDashboard();
 }
 
 function checkAdminAccount(name) {
@@ -1128,7 +1145,11 @@ function checkAdminAccount(name) {
 
 function doLogout() {
   _currentAccount = null;
+  _isAdmin = false;
+  sessionStorage.removeItem('loggedInUser');
+  sessionStorage.removeItem('isAdmin');
   document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('adminScreen').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'block';
   renderLoginScreen();
   window.scrollTo(0, 0);
@@ -1220,10 +1241,23 @@ function renderHistory(){
   // Logout handler
   document.getElementById('logoutBtn').addEventListener('click', doLogout);
 
-  // Initialize: show login screen on load
-  document.getElementById('startScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'block';
-  renderLoginScreen();
+  // Initialize: restore session or show login screen
+  const _savedUser = sessionStorage.getItem('loggedInUser');
+  const _savedIsAdmin = sessionStorage.getItem('isAdmin') === '1';
+  if (_savedUser) {
+    // セッション復帰（プルリフレッシュ対策）
+    _currentAccount = _savedUser;
+    _isAdmin = _savedIsAdmin;
+    document.getElementById('userNameInput').value = _savedUser;
+    document.getElementById('welcomeUserName').textContent = '👤 ' + _savedUser + ' さん';
+    document.getElementById('adminBtn').style.display = _savedIsAdmin ? '' : 'none';
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'block';
+  } else {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'block';
+    renderLoginScreen();
+  }
 
   // Periodic integrity check
   setInterval(function(){
