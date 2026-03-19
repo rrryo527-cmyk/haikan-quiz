@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Ball_valve|Gate_valve|Butterfly_valve|Globe_valve|Check_valve|Fire_extinguisher|Fire_sprinkler|Pipe_wrench|Torque_wrench|Spirit_level&prop=pageimages&pithumbsize=330&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Copper_tubing|Grease_trap|Fibre-reinforced_plastic_tanks_and_vessels|Drain-waste-vent_system|Water_tank|Piping_and_plumbing_fitting&prop=pageimages&pithumbsize=330&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Plumber%27s_trap|Flange|Stainless_steel|Multimeter|Clamp_meter|Insulation_resistance_test&prop=pageimages&pithumbsize=330&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=Pipe_cutter|Hammer_drill|Monkey_wrench|Elbow_\\(piping\\)&prop=pageimages&pithumbsize=330&format=json\")"
+    ]
+  }
+}
