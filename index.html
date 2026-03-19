@@ -367,7 +367,7 @@
         <button class="count-btn" data-diff="3">⭐⭐⭐ Hard</button>
       </div>
       <p>出題数を選んでスタートしてください。</p>
-      <div class="count-selector">
+      <div class="count-selector" id="countSelector">
         <button class="count-btn selected" data-count="10">10問</button>
         <button class="count-btn" data-count="20">20問</button>
         <button class="count-btn" data-count="30">30問</button>
@@ -503,12 +503,12 @@ function saveHistory(total,score,pct){try{const h=JSON.parse(localStorage.getIte
 function getHistory(){try{return JSON.parse(localStorage.getItem('quizHistory')||'[]');}catch(e){return [];}}
 
 document.querySelectorAll('.genre-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.genre-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedGenre=parseInt(btn.dataset.genre);});});
-document.querySelectorAll('.count-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.count-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedCount=parseInt(btn.dataset.count);});});
+document.querySelectorAll('#countSelector .count-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#countSelector .count-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedCount=parseInt(btn.dataset.count);});});
 document.querySelectorAll('#diffSelector .count-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#diffSelector .count-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedDiff=parseInt(btn.dataset.diff);});});
 document.getElementById('startBtn').addEventListener('click',()=>{
   wrongQuestions=[];startQuiz(selectedGenre,selectedCount);
 });
-document.getElementById('retryBtn').addEventListener('click',()=>{startQuiz(selectedGenre,selectedCount);});
+document.getElementById('retryBtn').addEventListener('click',()=>{wrongQuestions=[];startQuiz(selectedGenre,selectedCount);});
 document.getElementById('backBtn').addEventListener('click',()=>{document.getElementById('resultScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);});
 updateGenreCounts();
 
@@ -716,7 +716,6 @@ function renderAdminDashboard(){
 function renderAdminList(){
   _adminView='list';
   document.getElementById('adminTitle').textContent='🔒 管理者ダッシュボード';
-  document.getElementById('adminBack').onclick=function(){document.getElementById('adminScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);};
   const data=JSON.parse(localStorage.getItem('allUsersData')||'{}');
   const el=document.getElementById('adminContent');
   const users=Object.keys(data);
@@ -815,7 +814,6 @@ function renderAdminList(){
 function renderAdminDetail(userName){
   _adminView='detail';
   document.getElementById('adminTitle').textContent='👤 '+userName;
-  document.getElementById('adminBack').onclick=function(){_adminView='list';_adminSelectedUser=null;renderAdminDashboard();window.scrollTo(0,0);};
   const data=JSON.parse(localStorage.getItem('allUsersData')||'{}');
   const records=data[userName];
   if(!records||records.length===0){document.getElementById('adminContent').innerHTML='<div class="glossary-empty">データがありません。</div>';return;}
