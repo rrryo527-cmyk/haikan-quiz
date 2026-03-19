@@ -335,8 +335,6 @@
   .login-welcome { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
   .logout-btn { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; font-family: inherit; transition: all 0.2s; margin-top: 8px; }
   .logout-btn:hover { border-color: var(--wrong); color: var(--wrong); }
-  .delete-account-btn { border-color: var(--wrong); color: var(--wrong); font-size: 11px; padding: 6px 10px; }
-  .delete-account-btn:hover { background: var(--wrong-bg); }
   .user-welcome-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 10px 16px; background: var(--surface2); border-radius: 12px; border: 1px solid var(--border); gap: 8px; }
   .user-welcome-name { font-size: 14px; font-weight: 700; color: var(--accent2); flex: 1; }
   .admin-icon-btn { background: linear-gradient(135deg, var(--accent), #8b7cf7); border: none; color: #fff; width: 36px; height: 36px; border-radius: 10px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(108,92,231,0.3); flex-shrink: 0; }
@@ -398,7 +396,6 @@
         <span class="user-welcome-name" id="welcomeUserName"></span>
         <button class="admin-icon-btn" id="adminBtn" style="display:none;" title="管理者ダッシュボード">⚙️</button>
         <button class="logout-btn" id="logoutBtn">ログアウト</button>
-        <button class="logout-btn delete-account-btn" id="deleteAccountBtn">退会</button>
       </div>
       <button class="btn-primary" id="startBtn">⚔️ 挑戦者</button><br>
       <button class="btn-secondary" id="glossaryBtn">📖 用語辞典を開く</button>
@@ -1015,16 +1012,7 @@ function renderAdminDetail(userName){
     h+='</div>';
   }
 
-  // アカウント強制削除ボタン
-  h+='<div style="margin-top:24px;text-align:center;">';
-  h+='<button class="btn-secondary" id="adminDeleteUserBtn" style="border-color:var(--wrong);color:var(--wrong);">🗑️ このアカウントを削除</button>';
-  h+='</div>';
-
   el.innerHTML=h;
-
-  // 削除ボタンのイベント
-  var delBtn=document.getElementById('adminDeleteUserBtn');
-  if(delBtn)delBtn.addEventListener('click',function(){ adminDeleteAccount(userName); });
 }
 
 function calcStreak(records){
@@ -1204,7 +1192,6 @@ function loginAs(name) {
   document.getElementById('welcomeUserName').textContent = '👤 ' + name + ' さん';
 
   document.getElementById('adminBtn').style.display = 'none';
-  document.getElementById('deleteAccountBtn').style.display = '';
 
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('startScreen').style.display = 'block';
@@ -1220,7 +1207,6 @@ function loginAsAdmin() {
   document.getElementById('userNameInput').value = _AH.name;
   document.getElementById('welcomeUserName').textContent = '👤 ' + _AH.name + ' さん';
   document.getElementById('adminBtn').style.display = '';
-  document.getElementById('deleteAccountBtn').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('startScreen').style.display = 'block';
   renderRanking();
@@ -1245,50 +1231,6 @@ function doLogout() {
   window.scrollTo(0, 0);
 }
 
-// アカウント削除（自分自身）
-function doDeleteAccount() {
-  var name = _currentAccount;
-  if (!name) return;
-  if (name === _AH.name) { alert('管理者アカウントは削除できません。'); return; }
-  if (!confirm('「' + name + '」のアカウントを削除しますか？\n成績データもすべて削除されます。この操作は元に戻せません。')) return;
-  deleteAccountData(name);
-  doLogout();
-}
-
-// アカウント削除（管理者による強制削除）
-function adminDeleteAccount(name) {
-  if (name === _AH.name) { alert('管理者アカウントは削除できません。'); return; }
-  if (!confirm('「' + name + '」のアカウントを強制削除しますか？\n成績データもすべて削除されます。')) return;
-  deleteAccountData(name);
-  _adminView = 'list';
-  _adminSelectedUser = null;
-  // Firestoreから最新データを再取得してダッシュボード更新
-  db.collection('results').get().then(function(snap){
-    _cachedAllUsersData = {};
-    snap.forEach(function(doc){ _cachedAllUsersData[doc.id] = doc.data().records || []; });
-    renderAdminDashboard();
-  }).catch(function(){ renderAdminDashboard(); });
-}
-
-// 共通：アカウントデータ削除処理
-function deleteAccountData(name) {
-  // アカウント削除
-  delete _cachedAccounts[name];
-  db.collection('accounts').doc(name).delete().catch(function(e){ console.error('アカウント削除エラー:', e); });
-
-  // 成績データ削除
-  delete _cachedAllUsersData[name];
-  db.collection('results').doc(name).delete().catch(function(e){ console.error('成績削除エラー:', e); });
-
-  // 履歴データ削除
-  delete _cachedHistory[name];
-  db.collection('history').doc(name).delete().catch(function(e){ console.error('履歴削除エラー:', e); });
-
-  // lastLoginUser をクリア
-  if (localStorage.getItem('lastLoginUser') === name) {
-    localStorage.removeItem('lastLoginUser');
-  }
-}
 
 function saveUserResult(userName){
   try{
@@ -1436,9 +1378,8 @@ function renderRankingFromCache(){
   let lastAnswerTime=0;
   const origSelectAnswer=selectAnswer;
 
-  // Logout & delete account handlers
+  // Logout handler
   document.getElementById('logoutBtn').addEventListener('click', doLogout);
-  document.getElementById('deleteAccountBtn').addEventListener('click', doDeleteAccount);
 
   // Initialize: Firebaseからデータ読み込み後にログイン画面表示
   document.getElementById('startScreen').style.display = 'none';
