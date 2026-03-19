@@ -110,6 +110,8 @@
   @keyframes barPulse { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
   .score-display { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
   .score-display strong { color: var(--correct); }
+  .timer-display { font-size: 13px; color: var(--text-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .timer-display strong { color: var(--gold); font-size: 15px; }
 
   .genre-badge { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 700; white-space: nowrap; }
   .genre-0 { background: rgba(30,120,190,0.1); color: #1a6fb5; border: 1px solid rgba(30,120,190,0.3); }
@@ -460,6 +462,7 @@
       <div class="progress-info"><strong id="qNum">1</strong> / <span id="qTotal">10</span></div>
       <div class="bar-bg"><div class="bar-fill" id="progressBar" style="width:0%"></div></div>
       <div class="score-display">正解 <strong id="scoreCount">0</strong></div>
+      <div class="timer-display">⏱ <strong id="quizTimer">0:00</strong></div>
     </div>
     <div class="question-card">
       <div class="q-meta">
@@ -489,6 +492,7 @@
       <div class="result-score" id="finalScore">0</div>
       <div class="result-total" id="finalTotal">/ 10問中正解</div>
       <div class="result-rank" id="finalRank"></div>
+      <div class="result-time" id="resultTime" style="font-size:14px;color:var(--text-muted);margin-top:8px;"></div>
       <div class="result-breakdown" id="resultBreakdown"></div>
     </div>
     <div id="wrongList" style="display:none;text-align:left;margin-top:20px;"></div>
@@ -845,7 +849,8 @@ function updateGenreCounts(){GENRES.forEach((g,i)=>{const c=ALL_QUESTIONS.filter
 
 function getHint(q){if(q.h)return q.h;const f=q.ex.split('。')[0];let h=f;const ct=q.o[q.a];if(ct&&h.includes(ct))h=h.replace(ct,'○○○');if(h.length>50)h=h.substring(0,50)+'…';else h+='。';return h;}
 
-function startQuiz(genre,count){let pool=genre===-1?[...ALL_QUESTIONS]:ALL_QUESTIONS.filter(q=>q.genre===genre);if(selectedDiff>0)pool=pool.filter(q=>q.d===selectedDiff);if(pool.length===0){alert('該当する問題がありません。条件を変更してください。');return;}questions=shuffle(pool).slice(0,count);currentIdx=0;score=0;genreStats={};GENRES.forEach((_,i)=>{genreStats[i]={c:0,t:0};});document.getElementById('startScreen').style.display='none';document.getElementById('resultScreen').style.display='none';document.getElementById('quizScreen').style.display='block';document.getElementById('qTotal').textContent=questions.length;window.scrollTo(0,0);showQuestion();}
+let quizTimerInterval=null;let quizStartTime=null;function startQuizTimer(){quizStartTime=Date.now();if(quizTimerInterval)clearInterval(quizTimerInterval);quizTimerInterval=setInterval(()=>{const el=document.getElementById("quizTimer");if(!el)return;const elapsed=Math.floor((Date.now()-quizStartTime)/1000);const m=Math.floor(elapsed/60);const s=elapsed%60;el.textContent=m+":"+(s<10?"0":"")+s;},1000);}function stopQuizTimer(){if(quizTimerInterval){clearInterval(quizTimerInterval);quizTimerInterval=null;}return quizStartTime?Math.floor((Date.now()-quizStartTime)/1000):0;}function formatTime(sec){const m=Math.floor(sec/60);const s=sec%60;return m+"分"+(s<10?"0":"")+s+"秒";}
+function startQuiz(genre,count){let pool=genre===-1?[...ALL_QUESTIONS]:ALL_QUESTIONS.filter(q=>q.genre===genre);if(selectedDiff>0)pool=pool.filter(q=>q.d===selectedDiff);if(pool.length===0){alert('該当する問題がありません。条件を変更してください。');return;}questions=shuffle(pool).slice(0,count);currentIdx=0;score=0;genreStats={};GENRES.forEach((_,i)=>{genreStats[i]={c:0,t:0};});document.getElementById('startScreen').style.display='none';document.getElementById('resultScreen').style.display='none';document.getElementById('quizScreen').style.display='block';document.getElementById('qTotal').textContent=questions.length;window.scrollTo(0,0);showQuestion();startQuizTimer();}
 
 function showQuestion(){const q=questions[currentIdx];answered=false;document.getElementById('qNum').textContent=currentIdx+1;document.getElementById('progressBar').style.width=(currentIdx/questions.length*100)+'%';document.getElementById('scoreCount').textContent=score;const ge=document.getElementById('qGenre');ge.textContent=GENRES[q.genre].icon+' '+GENRES[q.genre].name;ge.className='genre-badge '+GENRES[q.genre].cls;document.getElementById('qDifficulty').textContent='★'.repeat(q.d)+'☆'.repeat(3-q.d);document.getElementById('questionText').textContent=q.q;const ia=document.getElementById('questionImage'),ie=document.getElementById('questionImg');if(q.img){ie.src=q.img;ie.onerror=function(){ia.className='question-image';};ia.className='question-image show';}else{ie.src='';ia.className='question-image';}document.getElementById('resultBadge').className='result-badge';document.getElementById('resultBadge').textContent='';const hb=document.getElementById('hintBtn'),ht=document.getElementById('hintText');hb.disabled=false;hb.textContent='💡 ヒントを見る';ht.className='hint-text';ht.innerHTML='';document.querySelectorAll('.option-explanation').forEach(el=>el.remove());const opts=document.getElementById('optionsContainer');opts.innerHTML='';q.o.forEach((text,i)=>{const btn=document.createElement('button');btn.className='option-btn';btn.innerHTML=`<span class="option-label">${optLabels[i]}</span><span>${text}</span>`;btn.addEventListener('click',()=>selectAnswer(i,q));opts.appendChild(btn);});document.getElementById('explanation').className='explanation';document.getElementById('explanation').innerHTML='';document.getElementById('nextBtn').className='nav-btn';}
 
@@ -854,13 +859,13 @@ function selectAnswer(ci,q){if(answered)return;answered=true;const btns=document
 
 document.getElementById('hintBtn').addEventListener('click',()=>{const q=questions[currentIdx];const ht=document.getElementById('hintText'),hb=document.getElementById('hintBtn');ht.innerHTML='💡 '+getHint(q);ht.classList.add('show');hb.disabled=true;hb.textContent='ヒント表示済み';});
 document.getElementById('nextBtn').addEventListener('click',()=>{currentIdx++;if(currentIdx>=questions.length)showResult();else{showQuestion();window.scrollTo(0,0);}});
-document.getElementById('quitBtn').addEventListener('click',()=>{if(confirm('トップに戻りますか？（進捗はリセットされます）')){document.getElementById('quizScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);}});
+document.getElementById('quitBtn').addEventListener('click',()=>{if(confirm('トップに戻りますか？（進捗はリセットされます）')){stopQuizTimer();document.getElementById('quizScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);}});
 document.getElementById('stopBtn').addEventListener('click',()=>{if(confirm('ここまでの結果を表示しますか？')){questions=questions.slice(0,currentIdx+(answered?1:0));showResult();}});
 
-function showResult(){document.getElementById('quizScreen').style.display='none';document.getElementById('resultScreen').style.display='block';window.scrollTo(0,0);
+function showResult(){const elapsedSec=stopQuizTimer();document.getElementById('quizScreen').style.display='none';document.getElementById('resultScreen').style.display='block';window.scrollTo(0,0);
 // 間違えた問題を保存
 saveWrongQuestions();
-const total=questions.length;const pct=Math.round(score/total*100);document.getElementById('finalScore').textContent=score;document.getElementById('finalTotal').textContent=`/ ${total}問中正解`;let rank='';if(pct>=90)rank='🏆 最優秀！素晴らしい実力です！';else if(pct>=70)rank='🎯 合格レベル！さらに上を目指しましょう！';else if(pct>=50)rank='📖 もう少し！復習して再挑戦を！';else rank='💪 基礎からしっかり学習しましょう！';document.getElementById('finalRank').textContent=rank;const bd=document.getElementById('resultBreakdown');bd.innerHTML='';GENRES.forEach((g,i)=>{const s=genreStats[i];if(s&&s.t>0){const div=document.createElement('div');div.className='breakdown-item';div.innerHTML=`<span class="val">${s.c}/${s.t}</span>${g.icon} ${g.name}`;bd.appendChild(div);}});saveHistory(total,score,pct);}
+const total=questions.length;const pct=Math.round(score/total*100);document.getElementById('finalScore').textContent=score;document.getElementById('finalTotal').textContent=`/ ${total}問中正解`;let rank='';if(pct>=90)rank='🏆 最優秀！素晴らしい実力です！';else if(pct>=70)rank='🎯 合格レベル！さらに上を目指しましょう！';else if(pct>=50)rank='📖 もう少し！復習して再挑戦を！';else rank='💪 基礎からしっかり学習しましょう！';document.getElementById('finalRank').textContent=rank;document.getElementById('resultTime').textContent='⏱ 所要時間: '+formatTime(elapsedSec);const bd=document.getElementById('resultBreakdown');bd.innerHTML='';GENRES.forEach((g,i)=>{const s=genreStats[i];if(s&&s.t>0){const div=document.createElement('div');div.className='breakdown-item';div.innerHTML=`<span class="val">${s.c}/${s.t}</span>${g.icon} ${g.name}`;bd.appendChild(div);}});saveHistory(total,score,pct);}
 function saveHistory(total,score,pct){try{const userName=_currentAccount||'匿名';if(!_cachedHistory[userName])_cachedHistory[userName]=[];_cachedHistory[userName].push({date:new Date().toISOString(),genre:selectedGenre,diff:selectedDiff,total,score,pct});if(_cachedHistory[userName].length>100)_cachedHistory[userName].splice(0,_cachedHistory[userName].length-100);db.collection('history').doc(userName).set({records:_cachedHistory[userName]}).catch(function(e){console.error('履歴保存エラー:',e);});}catch(e){}}
 function getHistory(){const userName=_currentAccount||'匿名';return _cachedHistory[userName]||[];}
 
