@@ -1481,6 +1481,7 @@ function renderRankingFromCache(){
       document.getElementById('userNameInput').value = _savedUser;
       document.getElementById('welcomeUserName').textContent = '👤 ' + _savedUser + ' さん';
       document.getElementById('adminBtn').style.display = _savedIsAdmin ? '' : 'none';
+      document.getElementById('deleteAccountBtn').style.display = _savedIsAdmin ? 'none' : '';
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('startScreen').style.display = 'block';
       renderRanking();
