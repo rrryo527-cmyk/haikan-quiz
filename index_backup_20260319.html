@@ -132,17 +132,11 @@
   .question-image { margin-bottom: 14px; text-align: center; display: none; }
   .question-image img { max-width: 100%; max-height: 260px; border-radius: 8px; border: 1px solid var(--border); object-fit: contain; background: #f9f9f9; cursor: pointer; }
   .question-image.show { display: block; }
-  .lightbox-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; flex-direction:column; touch-action:none; user-select:none; -webkit-user-select:none; }
+  .lightbox-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); justify-content:center; align-items:center; flex-direction:column; }
   .lightbox-overlay.show { display:flex; }
-  .lightbox-img-container { position:relative; width:96vw; height:92vh; display:flex; justify-content:center; align-items:center; overflow:hidden; }
-  .lightbox-img-container img { max-width:100%; max-height:100%; object-fit:contain; transform-origin:0 0; will-change:transform; }
-  .lightbox-close { position:absolute; top:12px; right:16px; background:rgba(0,0,0,0.5); border:2px solid rgba(255,255,255,0.3); color:#fff; font-size:28px; cursor:pointer; z-index:10001; padding:4px 12px; border-radius:50%; line-height:1; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
-  .lightbox-close:hover { color:var(--accent); background:rgba(0,0,0,0.7); }
-  .lightbox-spinner { display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:40px; height:40px; border:3px solid rgba(255,255,255,0.2); border-top-color:#fff; border-radius:50%; animation:lb-spin 0.8s linear infinite; z-index:10000; }
-  .lightbox-spinner.show { display:block; }
-  @keyframes lb-spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
-  .lightbox-hint { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.6); font-size:12px; pointer-events:none; transition:opacity 0.5s; z-index:10000; background:rgba(0,0,0,0.4); padding:6px 16px; border-radius:20px; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
-  .lightbox-hint.hide { opacity:0; }
+  .lightbox-overlay img { max-width:95vw; max-height:85vh; object-fit:contain; border-radius:8px; }
+  .lightbox-close { position:absolute; top:16px; right:20px; background:none; border:none; color:#fff; font-size:32px; cursor:pointer; z-index:10000; padding:8px; }
+  .lightbox-close:hover { color:var(--accent); }
   .glossary-item-img { cursor: pointer; }
 
   .question-text { font-size: 19px; font-weight: 700; line-height: 1.7; color: var(--text); }
@@ -502,11 +496,7 @@
 <!-- 画像全画面表示用ライトボックス -->
 <div class="lightbox-overlay" id="lightbox">
   <button class="lightbox-close" id="lightboxClose">&times;</button>
-  <div class="lightbox-img-container" id="lightboxContainer">
-    <div class="lightbox-spinner" id="lightboxSpinner"></div>
-    <img id="lightboxImg" src="" alt="拡大画像" draggable="false">
-  </div>
-  <div class="lightbox-hint" id="lightboxHint">ピンチ or ダブルタップで拡大 ／ ドラッグで移動</div>
+  <img id="lightboxImg" src="" alt="拡大画像">
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -731,156 +721,21 @@ function renderManualItems(cat){
   });
 }
 
-// ライトボックス（画像全画面表示 - ピンチズーム・パン・ダブルタップ対応）
-(function(){
+// ライトボックス（画像全画面表示）
+function openLightbox(src){
   const lb=document.getElementById('lightbox');
-  const lbImg=document.getElementById('lightboxImg');
-  const lbContainer=document.getElementById('lightboxContainer');
-  const lbSpinner=document.getElementById('lightboxSpinner');
-  const lbHint=document.getElementById('lightboxHint');
-
-  let scale=1, posX=0, posY=0;
-  let startDist=0, startScale=1;
-  let startX=0, startY=0, startPosX=0, startPosY=0;
-  let isDragging=false, isPinching=false;
-  let lastTap=0, hintTimer=null;
-  let imgW=0, imgH=0;
-
-  function resetTransform(){ scale=1; posX=0; posY=0; applyTransform(); }
-  function applyTransform(smooth){
-    lbImg.style.transition=smooth?'transform 0.25s ease':'none';
-    lbImg.style.transformOrigin='0 0';
-    lbImg.style.transform='translate('+posX+'px,'+posY+'px) scale('+scale+')';
-    if(smooth) setTimeout(function(){ lbImg.style.transition='none'; },260);
-  }
-  function clampPos(){
-    const cw=lbContainer.clientWidth, ch=lbContainer.clientHeight;
-    const sw=imgW*scale, sh=imgH*scale;
-    if(sw<=cw){ posX=(cw-sw)/2; }
-    else{ if(posX>0) posX=0; if(posX<cw-sw) posX=cw-sw; }
-    if(sh<=ch){ posY=(ch-sh)/2; }
-    else{ if(posY>0) posY=0; if(posY<ch-sh) posY=ch-sh; }
-  }
-  function centerImage(){
-    const cw=lbContainer.clientWidth, ch=lbContainer.clientHeight;
-    imgW=lbImg.naturalWidth; imgH=lbImg.naturalHeight;
-    const r=Math.min(cw/imgW, ch/imgH, 1);
-    imgW*=r; imgH*=r; lbImg.style.width=imgW+'px'; lbImg.style.height=imgH+'px';
-    posX=(cw-imgW)/2; posY=(ch-imgH)/2; scale=1; applyTransform();
-  }
-  function getTouchDist(e){ const t=e.touches; return Math.hypot(t[0].clientX-t[1].clientX, t[0].clientY-t[1].clientY); }
-  function getTouchMid(e){ const t=e.touches; return {x:(t[0].clientX+t[1].clientX)/2, y:(t[0].clientY+t[1].clientY)/2}; }
-
-  window.openLightbox=function(src){
-    lbSpinner.classList.add('show');
-    lbImg.style.opacity='0';
-    lbImg.onload=function(){
-      lbSpinner.classList.remove('show');
-      lbImg.style.opacity='1';
-      centerImage();
-      lbHint.classList.remove('hide');
-      if(hintTimer) clearTimeout(hintTimer);
-      hintTimer=setTimeout(function(){ lbHint.classList.add('hide'); },3000);
-    };
-    lbImg.src=src;
-    lb.classList.add('show');
-    document.body.style.overflow='hidden';
-  };
-  window.closeLightbox=function(){
-    lb.classList.remove('show');
-    lbImg.src=''; resetTransform();
-    document.body.style.overflow='';
-    lbHint.classList.add('hide');
-  };
-
-  // 閉じるボタン
-  document.getElementById('lightboxClose').addEventListener('click',closeLightbox);
-  // オーバーレイクリック（非拡大時のみ閉じる）
-  lb.addEventListener('click',function(e){
-    if(scale>1.05) return;
-    if(e.target===lb||e.target===lbContainer) closeLightbox();
-  });
-
-  // ダブルタップズーム
-  lbContainer.addEventListener('click',function(e){
-    if(e.target===lbContainer&&scale<=1.05) return;
-    var now=Date.now();
-    if(now-lastTap<300){
-      e.preventDefault();
-      if(scale>1.05){ scale=1; clampPos(); applyTransform(true); }
-      else{
-        var rect=lbContainer.getBoundingClientRect();
-        var cx=e.clientX-rect.left, cy=e.clientY-rect.top;
-        var ns=2.5;
-        posX=cx-(cx-posX)*ns/scale; posY=cy-(cy-posY)*ns/scale;
-        scale=ns; clampPos(); applyTransform(true);
-      }
-      lastTap=0;
-    } else { lastTap=now; }
-  });
-
-  // タッチイベント（ピンチ＆パン）
-  lbContainer.addEventListener('touchstart',function(e){
-    if(e.touches.length===2){
-      isPinching=true; isDragging=false;
-      startDist=getTouchDist(e); startScale=scale;
-      e.preventDefault();
-    } else if(e.touches.length===1){
-      isDragging=true; isPinching=false;
-      startX=e.touches[0].clientX; startY=e.touches[0].clientY;
-      startPosX=posX; startPosY=posY;
-    }
-  },{passive:false});
-  lbContainer.addEventListener('touchmove',function(e){
-    if(isPinching&&e.touches.length===2){
-      e.preventDefault();
-      var d=getTouchDist(e), mid=getTouchMid(e);
-      var rect=lbContainer.getBoundingClientRect();
-      var cx=mid.x-rect.left, cy=mid.y-rect.top;
-      var ns=Math.min(Math.max(startScale*(d/startDist),1),5);
-      posX=cx-(cx-posX)*ns/scale; posY=cy-(cy-posY)*ns/scale;
-      scale=ns; clampPos(); applyTransform();
-    } else if(isDragging&&e.touches.length===1&&scale>1.05){
-      e.preventDefault();
-      posX=startPosX+(e.touches[0].clientX-startX);
-      posY=startPosY+(e.touches[0].clientY-startY);
-      clampPos(); applyTransform();
-    }
-  },{passive:false});
-  lbContainer.addEventListener('touchend',function(e){
-    if(e.touches.length<2) isPinching=false;
-    if(e.touches.length===0) isDragging=false;
-    if(scale<1){ scale=1; clampPos(); applyTransform(true); }
-  });
-
-  // マウスドラッグ（PC対応）
-  lbContainer.addEventListener('mousedown',function(e){
-    if(scale<=1.05||e.button!==0) return;
-    isDragging=true; startX=e.clientX; startY=e.clientY;
-    startPosX=posX; startPosY=posY;
-    lbContainer.style.cursor='grabbing'; e.preventDefault();
-  });
-  window.addEventListener('mousemove',function(e){
-    if(!isDragging) return;
-    posX=startPosX+(e.clientX-startX); posY=startPosY+(e.clientY-startY);
-    clampPos(); applyTransform();
-  });
-  window.addEventListener('mouseup',function(){ isDragging=false; lbContainer.style.cursor=''; });
-
-  // マウスホイールズーム（PC対応）
-  lbContainer.addEventListener('wheel',function(e){
-    e.preventDefault();
-    var rect=lbContainer.getBoundingClientRect();
-    var cx=e.clientX-rect.left, cy=e.clientY-rect.top;
-    var delta=e.deltaY>0?0.9:1.1;
-    var ns=Math.min(Math.max(scale*delta,1),5);
-    posX=cx-(cx-posX)*ns/scale; posY=cy-(cy-posY)*ns/scale;
-    scale=ns; clampPos(); applyTransform();
-  },{passive:false});
-
-  // ウィンドウリサイズ時に再センタリング
-  window.addEventListener('resize',function(){ if(lb.classList.contains('show')&&lbImg.naturalWidth) centerImage(); });
-})();
+  document.getElementById('lightboxImg').src=src;
+  lb.classList.add('show');
+}
+function closeLightbox(){
+  const lb=document.getElementById('lightbox');
+  lb.classList.remove('show');
+  document.getElementById('lightboxImg').src='';
+}
+document.getElementById('lightboxClose').addEventListener('click',closeLightbox);
+document.getElementById('lightbox').addEventListener('click',function(e){
+  if(e.target===this)closeLightbox();
+});
 // クイズ画面の問題画像クリック
 document.getElementById('questionImg').addEventListener('click',function(){
   if(this.src&&this.src!==location.href)openLightbox(this.src);
