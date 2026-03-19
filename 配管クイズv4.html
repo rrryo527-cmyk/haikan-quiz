@@ -295,7 +295,7 @@
         <button class="count-btn" data-count="9999">全問</button>
       </div>
       <div style="margin:16px 0;">
-        <input type="text" id="userNameInput" placeholder="名字を漢字で入力（例：荒木）" required style="padding:12px 18px;border:1px solid var(--border);border-radius:12px;font-size:15px;font-family:inherit;width:100%;max-width:320px;margin-bottom:8px;background:var(--surface2);color:var(--text);box-shadow:inset 0 2px 4px rgba(0,0,0,0.1);" autocomplete="off">
+        <input type="text" id="userNameInput" placeholder="フルネームを漢字で入力（例：荒木稜）" required style="padding:12px 18px;border:1px solid var(--border);border-radius:12px;font-size:15px;font-family:inherit;width:100%;max-width:320px;margin-bottom:8px;background:var(--surface2);color:var(--text);box-shadow:inset 0 2px 4px rgba(0,0,0,0.1);" autocomplete="off">
       </div>
       <button class="btn-primary" id="startBtn">⚔️ 挑戦者</button><br>
       <button class="btn-secondary" id="glossaryBtn">📖 用語辞典を開く</button>
@@ -425,9 +425,9 @@ document.querySelectorAll('.count-btn').forEach(btn=>{btn.addEventListener('clic
 document.querySelectorAll('#diffSelector .count-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#diffSelector .count-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedDiff=parseInt(btn.dataset.diff);});});
 document.getElementById('startBtn').addEventListener('click',()=>{
   const name=document.getElementById('userNameInput').value.trim();
-  if(!name){alert('名字を入力してください。');return;}
+  if(!name){alert('フルネームを漢字で入力してください。');return;}
   const kanjiRegex=/^[\u4E00-\u9FFF\u3400-\u4DBF]+$/u;
-  if(!kanjiRegex.test(name)){alert('名字は漢字で入力してください。（例：荒木）');return;}
+  if(!kanjiRegex.test(name)){alert('フルネームを漢字で入力してください。（例：荒木稜）');return;}
   localStorage.setItem('userName',name);
   wrongQuestions=[];startQuiz(selectedGenre,selectedCount);
 });
