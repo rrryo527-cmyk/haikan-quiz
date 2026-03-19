@@ -130,14 +130,8 @@
   .q-difficulty { font-size: 11px; color: var(--text-muted); margin-left: auto; }
 
   .question-image { margin-bottom: 14px; text-align: center; display: none; }
-  .question-image img { max-width: 100%; max-height: 260px; border-radius: 8px; border: 1px solid var(--border); object-fit: contain; background: #f9f9f9; cursor: pointer; }
+  .question-image img { max-width: 100%; max-height: 260px; border-radius: 8px; border: 1px solid var(--border); object-fit: contain; background: #f9f9f9; }
   .question-image.show { display: block; }
-  .lightbox-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); justify-content:center; align-items:center; flex-direction:column; }
-  .lightbox-overlay.show { display:flex; }
-  .lightbox-overlay img { max-width:95vw; max-height:85vh; object-fit:contain; border-radius:8px; }
-  .lightbox-close { position:absolute; top:16px; right:20px; background:none; border:none; color:#fff; font-size:32px; cursor:pointer; z-index:10000; padding:8px; }
-  .lightbox-close:hover { color:var(--accent); }
-  .glossary-item-img { cursor: pointer; }
 
   .question-text { font-size: 19px; font-weight: 700; line-height: 1.7; color: var(--text); }
 
@@ -490,12 +484,6 @@
   <div class="app-footer">ARAKI CONSTRUCTION TRAINING SYSTEM &copy; 2026</div>
 </div>
 
-<!-- 画像全画面表示用ライトボックス -->
-<div class="lightbox-overlay" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose">&times;</button>
-  <img id="lightboxImg" src="" alt="拡大画像">
-</div>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
@@ -717,32 +705,6 @@ function renderManualItems(cat){
     });
   });
 }
-
-// ライトボックス（画像全画面表示）
-function openLightbox(src){
-  const lb=document.getElementById('lightbox');
-  document.getElementById('lightboxImg').src=src;
-  lb.classList.add('show');
-}
-function closeLightbox(){
-  const lb=document.getElementById('lightbox');
-  lb.classList.remove('show');
-  document.getElementById('lightboxImg').src='';
-}
-document.getElementById('lightboxClose').addEventListener('click',closeLightbox);
-document.getElementById('lightbox').addEventListener('click',function(e){
-  if(e.target===this)closeLightbox();
-});
-// クイズ画面の問題画像クリック
-document.getElementById('questionImg').addEventListener('click',function(){
-  if(this.src&&this.src!==location.href)openLightbox(this.src);
-});
-// 用語辞典の画像クリック（イベント委譲）
-document.addEventListener('click',function(e){
-  if(e.target.classList.contains('glossary-item-img')){
-    openLightbox(e.target.src);
-  }
-});
 
 // 結果表示時にユーザーデータ保存
 const origSaveHistory=saveHistory;
