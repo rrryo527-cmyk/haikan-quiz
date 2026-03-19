@@ -382,6 +382,19 @@
   .genre-back-btn:hover { opacity: 0.7; }
   .selected-genre-badge { display: inline-block; background: var(--accent); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 15px; font-weight: 700; margin: 8px 0 16px; }
 
+  
+  .exam-mode-btn { background: linear-gradient(145deg, #c0392b, #e74c3c); border: 2px solid #e74c3c; color: #fff; padding: 14px 24px; border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 700; font-family: inherit; width: 100%; margin-top: 8px; transition: all 0.3s; letter-spacing: 1px; }
+  .exam-mode-btn:hover { background: linear-gradient(145deg, #a93226, #c0392b); transform: translateY(-1px); box-shadow: 0 4px 15px rgba(231,76,60,0.4); }
+  .exam-timer-bar { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.1); z-index: 1000; }
+  .exam-timer-fill { height: 100%; background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c); transition: width 1s linear; border-radius: 0 2px 2px 0; }
+  .exam-badge { display: inline-block; background: #e74c3c; color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-left: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
+  .exam-result-pass { color: #2ecc71; font-size: 28px; font-weight: 700; margin: 16px 0; }
+  .exam-result-fail { color: #e74c3c; font-size: 28px; font-weight: 700; margin: 16px 0; }
+  .exam-result-info { background: var(--surface2); border-radius: 12px; padding: 16px; margin: 12px 0; text-align: left; }
+  .exam-result-info p { margin: 4px 0; font-size: 14px; color: var(--text-muted); }
+  .exam-result-info .label { font-weight: 700; color: var(--text); }
+
   </style>
 </head>
 <body>
@@ -457,7 +470,8 @@
         <button class="logout-btn" id="logoutBtn">ログアウト</button>
         <button class="logout-btn delete-account-btn" id="deleteAccountBtn">退会</button>
       </div>
-      <button class="btn-primary" id="startBtn">🚀 Challenge</button><br>
+      <button class="btn-primary" id="startBtn">🚀 Challenge</button>
+      <button class="exam-mode-btn" id="examModeBtn">🔥 ガチ試験モード</button><br>
       <button class="btn-secondary" id="glossaryBtn">📖 用語辞典を開く</button>
       <button class="btn-secondary" id="manualBtn">📋 作業マニュアル</button>
       <button class="btn-secondary" id="historyBtn">📊 成績履歴を見る</button>
@@ -512,6 +526,7 @@
   </div>
 
   <div id="quizScreen">
+    <div class="exam-timer-bar" id="examTimerBar" style="display:none;"><div class="exam-timer-fill" id="examTimerFill"></div></div>
     <div class="progress-bar-wrap">
       <div class="progress-info"><strong id="qNum">1</strong> / <span id="qTotal">10</span></div>
       <div class="bar-bg"><div class="bar-fill" id="progressBar" style="width:0%"></div></div>
@@ -548,6 +563,10 @@
       <div class="result-rank" id="finalRank"></div>
       <div class="result-time" id="resultTime" style="font-size:14px;color:var(--text-muted);margin-top:8px;"></div>
       <div class="result-breakdown" id="resultBreakdown"></div>
+      <div id="examResultPanel" style="display:none;">
+        <div id="examPassFail"></div>
+        <div class="exam-result-info" id="examResultInfo"></div>
+      </div>
     </div>
     <div id="wrongList" style="display:none;text-align:left;margin-top:20px;"></div>
     <button class="btn-secondary" id="showWrongBtn" style="margin-bottom:12px;">❌ 間違えた問題を見返す</button><br>
@@ -650,6 +669,7 @@ function showStep2(genre){
   s2.style.display='block';
   document.getElementById('selectedGenreBadge').textContent=GENRE_LABELS[genre]||('ジャンル'+genre);
   window.scrollTo({top:0,behavior:'smooth'});
+  var examBtn=document.getElementById('examModeBtn');if(examBtn){examBtn.style.display=EXAM_CONFIG[genre]?'block':'none';}
 }
 function showStep1(){
   document.getElementById('step2Panel').classList.remove('active');
@@ -1853,6 +1873,118 @@ document.addEventListener('focusin',function(e){
     setTimeout(function(){window.scrollTo(0,window.scrollY);},300);
   }
 });
+
+// === EXAM MODE ===
+let isExamMode = false;
+let examTimeLimit = 0; // seconds
+let examTimerInterval = null;
+let examStartTime = 0;
+
+const EXAM_CONFIG = {
+  7: { name: '2級管工事施工管理技士', questions: 52, time: 130, pass: 60 },
+  8: { name: '2級土木施工管理技士', questions: 61, time: 130, pass: 60 },
+  9: { name: '2級建築施工管理技士', questions: 50, time: 130, pass: 60 },
+  10: { name: '給水装置工事主任技術者', questions: 40, time: 100, pass: 60 },
+  11: { name: '第二種電気工事士', questions: 50, time: 120, pass: 60 },
+  14: { name: 'マンション管理士', questions: 50, time: 120, pass: 70 },
+  15: { name: '管理業務主任者', questions: 50, time: 120, pass: 70 },
+  16: { name: '建築物環境衛生管理技術者', questions: 180, time: 360, pass: 65 },
+};
+
+function getExamConfig(genre) {
+  return EXAM_CONFIG[genre] || null;
+}
+
+function startExamMode() {
+  var config = getExamConfig(selectedGenre);
+  if (!config) {
+    alert('このジャンルにはガチ試験モードはありません。\n資格試験系ジャンル(7-11, 14-16)で利用できます。');
+    return;
+  }
+  isExamMode = true;
+  examTimeLimit = config.time * 60;
+  selectedCount = config.questions;
+  selectedDiff = 0;
+  wrongQuestions = [];
+  startQuiz(selectedGenre, selectedCount);
+  startExamTimer();
+}
+
+function startExamTimer() {
+  examStartTime = Date.now();
+  var bar = document.getElementById('examTimerBar');
+  var fill = document.getElementById('examTimerFill');
+  bar.style.display = 'block';
+  fill.style.width = '100%';
+
+  var badge = document.createElement('span');
+  badge.className = 'exam-badge';
+  badge.id = 'examBadge';
+  badge.textContent = 'ガチ試験';
+  var timer = document.getElementById('quizTimer');
+  if (timer && !document.getElementById('examBadge')) {
+    timer.parentNode.insertBefore(badge, timer.nextSibling);
+  }
+
+  if (examTimerInterval) clearInterval(examTimerInterval);
+  examTimerInterval = setInterval(function() {
+    var elapsed = Math.floor((Date.now() - examStartTime) / 1000);
+    var remaining = examTimeLimit - elapsed;
+    var pct = Math.max(0, (remaining / examTimeLimit) * 100);
+    fill.style.width = pct + '%';
+
+    if (remaining <= 0) {
+      clearInterval(examTimerInterval);
+      examTimerInterval = null;
+      alert('⏰ 時間切れです！');
+      showResult();
+    }
+  }, 1000);
+}
+
+function stopExamTimer() {
+  if (examTimerInterval) {
+    clearInterval(examTimerInterval);
+    examTimerInterval = null;
+  }
+  document.getElementById('examTimerBar').style.display = 'none';
+  var badge = document.getElementById('examBadge');
+  if (badge) badge.remove();
+}
+
+var origShowResult = showResult;
+showResult = function() {
+  if (isExamMode) stopExamTimer();
+  origShowResult();
+  var panel = document.getElementById('examResultPanel');
+  if (isExamMode) {
+    var config = getExamConfig(selectedGenre);
+    var total = questions.length;
+    var pct = Math.round(score / total * 100);
+    var elapsed = Math.floor((Date.now() - examStartTime) / 1000);
+    var passed = pct >= config.pass;
+
+    var pfDiv = document.getElementById('examPassFail');
+    pfDiv.className = passed ? 'exam-result-pass' : 'exam-result-fail';
+    pfDiv.textContent = passed ? '🎉 合格！' : '❌ 不合格';
+
+    var infoDiv = document.getElementById('examResultInfo');
+    infoDiv.innerHTML = '<p><span class="label">試験:</span> ' + config.name + '</p>' +
+      '<p><span class="label">得点:</span> ' + score + ' / ' + total + '問 (' + pct + '%)</p>' +
+      '<p><span class="label">合格基準:</span> ' + config.pass + '%以上</p>' +
+      '<p><span class="label">所要時間:</span> ' + formatTime(elapsed) + ' / ' + config.time + '分</p>';
+
+    panel.style.display = 'block';
+    isExamMode = false;
+  } else {
+    panel.style.display = 'none';
+  }
+};
+
+document.getElementById('examModeBtn').addEventListener('click', function() {
+  startExamMode();
+});
+
 </script>
 </body>
 </html>
