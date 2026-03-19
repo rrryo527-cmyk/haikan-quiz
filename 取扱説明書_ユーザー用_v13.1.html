@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>建築設備 知識クイズ Pro - 取扱説明書（ユーザー用）v13.1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap">
+<style>
+  :root { --primary: #6c5ce7; --primary-light: #a29bfe; --primary-bg: #f0eeff; --text: #2d3436; --text-muted: #636e72; --border: #dfe6e9; --bg: #ffffff; --section-bg: #fafbfc; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans JP', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; font-size: 15px; }
+
+  /* 印刷対応 */
+  @media print {
+    body { font-size: 12px; line-height: 1.6; }
+    .cover-page, section { page-break-inside: avoid; }
+    .cover-page { page-break-after: always; }
+    .toc { page-break-after: always; }
+    h2 { page-break-before: always; }
+    .no-print { display: none; }
+  }
+
+  /* 表紙 */
+  .cover-page { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #6c5ce7 100%); color: #fff; text-align: center; padding: 40px 20px; }
+  .cover-icon { font-size: 80px; margin-bottom: 20px; }
+  .cover-title { font-size: 36px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px; }
+  .cover-subtitle { font-size: 22px; font-weight: 500; opacity: 0.9; margin-bottom: 30px; }
+  .cover-version { font-size: 18px; background: rgba(255,255,255,0.2); padding: 8px 28px; border-radius: 30px; margin-bottom: 12px; display: inline-block; }
+  .cover-date { font-size: 15px; opacity: 0.8; margin-bottom: 40px; }
+  .cover-company { font-size: 13px; letter-spacing: 3px; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px; }
+
+  /* コンテンツ */
+  .content { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+
+  /* 目次 */
+  .toc { margin-bottom: 40px; }
+  .toc h2 { page-break-before: avoid; }
+  .toc-list { list-style: none; counter-reset: toc; }
+  .toc-list li { counter-increment: toc; border-bottom: 1px dotted var(--border); padding: 10px 0; }
+  .toc-list li a { color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .toc-list li a:hover { color: var(--primary); }
+  .toc-list li a::before { content: counter(toc) '.'; color: var(--primary); font-weight: 700; min-width: 24px; }
+
+  /* 見出し */
+  h2 { font-size: 24px; font-weight: 900; color: var(--primary); border-left: 5px solid var(--primary); padding: 8px 0 8px 16px; margin: 48px 0 24px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--text); margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-bg); }
+
+  /* テーブル */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  th { background: var(--primary); color: #fff; padding: 10px 14px; text-align: left; font-weight: 500; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: var(--section-bg); }
+
+  /* ボックス */
+  .info-box { background: var(--primary-bg); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; }
+  .warn-box { background: #fff8e1; border-left: 4px solid #f39c12; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; }
+  .warn-box::before { content: '\26A0\FE0F '; }
+
+  /* リスト */
+  ul, ol { margin: 10px 0 16px 24px; }
+  li { margin-bottom: 6px; }
+  .step-list { list-style: none; counter-reset: step; margin-left: 0; }
+  .step-list li { counter-increment: step; padding: 10px 14px 10px 48px; position: relative; background: var(--section-bg); border-radius: 8px; margin-bottom: 8px; }
+  .step-list li::before { content: counter(step); position: absolute; left: 12px; top: 10px; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+
+  /* FAQ */
+  .faq-item { margin-bottom: 20px; }
+  .faq-q { font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+  .faq-q::before { content: 'Q. '; }
+  .faq-a { padding-left: 24px; color: var(--text-muted); }
+  .faq-a::before { content: 'A. '; font-weight: 700; color: var(--text); }
+
+  /* フッター */
+  .doc-footer { text-align: center; padding: 30px 0; margin-top: 40px; border-top: 2px solid var(--border); color: var(--text-muted); font-size: 12px; letter-spacing: 2px; }
+
+  p { margin-bottom: 12px; }
+  strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="cover-page">
+  <div class="cover-icon">&#x1F527;</div>
+  <div class="cover-title">建築設備 知識クイズ Pro</div>
+  <div class="cover-subtitle">取扱説明書（ユーザー用）</div>
+  <div class="cover-version">Version 13.1</div>
+  <div class="cover-date">2026年3月19日</div>
+  <div class="cover-company">ARAKI CONSTRUCTION TRAINING SYSTEM</div>
+</div>
+
+<div class="content">
+
+<!-- 目次 -->
+<div class="toc">
+<h2 id="toc" style="page-break-before:avoid;">目次</h2>
+<ol class="toc-list">
+  <li><a href="#sec1">はじめに</a></li>
+  <li><a href="#sec2">アカウント登録・ログイン</a></li>
+  <li><a href="#sec3">スタート画面</a></li>
+  <li><a href="#sec4">クイズの始め方</a></li>
+  <li><a href="#sec5">クイズ画面の使い方</a></li>
+  <li><a href="#sec6">結果画面</a></li>
+  <li><a href="#sec7">ランキング機能</a></li>
+  <li><a href="#sec8">用語辞典・作業マニュアル</a></li>
+  <li><a href="#sec9">成績履歴</a></li>
+  <li><a href="#sec10">画像の拡大表示</a></li>
+  <li><a href="#sec11">アカウント管理（退会）</a></li>
+  <li><a href="#sec12">よくある質問</a></li>
+</ol>
+</div>
+
+<!-- 1. はじめに -->
+<h2 id="sec1">はじめに</h2>
+<p><strong>建築設備 知識クイズ Pro</strong> は、建築設備に関する幅広い知識を学べるクイズアプリです。全12ジャンル・2,911問の豊富な問題を収録し、3段階の難易度で学習できます。</p>
+
+<h3>主な特徴</h3>
+<ul>
+  <li>全12ジャンル・<strong>2,911問</strong>の豊富な問題</li>
+  <li>3段階の難易度（Easy / Normal / Hard）</li>
+  <li><strong>クラウド保存</strong>で複数端末からアクセス可能</li>
+  <li>用語辞典（176語）・作業マニュアル搭載</li>
+  <li>ランキング機能で他ユーザーと競争</li>
+</ul>
+
+<h3>対応ジャンル（12ジャンル）</h3>
+<table>
+  <tr><th>ジャンル</th><th>問題数</th></tr>
+  <tr><td>配管工事</td><td>312問</td></tr>
+  <tr><td>消防設備点検</td><td>212問</td></tr>
+  <tr><td>貯水槽清掃</td><td>207問</td></tr>
+  <tr><td>排水管清掃</td><td>206問</td></tr>
+  <tr><td>設備点検</td><td>238問</td></tr>
+  <tr><td>ビジネスマナー</td><td>174問</td></tr>
+  <tr><td>内装工事</td><td>200問</td></tr>
+  <tr><td>管工事施工管理</td><td>309問</td></tr>
+  <tr><td>土木施工管理</td><td>203問</td></tr>
+  <tr><td>建築施工管理</td><td>285問</td></tr>
+  <tr><td>給水装置</td><td>275問</td></tr>
+  <tr><td>第2種電気工事士</td><td>290問</td></tr>
+</table>
+
+<h3>アクセス方法</h3>
+<p>ブラウザで以下のURLにアクセスしてください。スマートフォン・タブレット・PCに対応しています。</p>
+<div class="info-box">https://rrryo527-cmyk.github.io/haikan-quiz/</div>
+
+<!-- 2. アカウント登録・ログイン -->
+<h2 id="sec2">アカウント登録・ログイン</h2>
+
+<h3>新規登録</h3>
+<ol class="step-list">
+  <li>トップ画面の「<strong>新規登録</strong>」ボタンをタップ</li>
+  <li><strong>漢字フルネーム</strong>（例：山田太郎）を入力</li>
+  <li><strong>パスワード</strong>を入力</li>
+  <li>「登録」ボタンをタップ</li>
+</ol>
+
+<h3>ログイン</h3>
+<ol class="step-list">
+  <li>トップ画面の「<strong>ログイン</strong>」ボタンをタップ</li>
+  <li>登録済みの漢字フルネームを入力</li>
+  <li>パスワードを入力</li>
+  <li>「ログイン」ボタンをタップ</li>
+</ol>
+
+<div class="warn-box">パスワードの確認入力欄はありません。入力間違いにご注意ください。</div>
+<div class="info-box">データはクラウド（Firebase）に保存されるため、<strong>同じ名前・パスワードでログインすれば、別の端末からでも成績データにアクセスできます</strong>。ページをリロードしてもログイン状態は維持されます。</div>
+
+<!-- 3. スタート画面 -->
+<h2 id="sec3">スタート画面</h2>
+<p>ログイン後のスタート画面では以下の操作ができます：</p>
+<ul>
+  <li>ジャンル選択（全ジャンルまたは個別ジャンル）</li>
+  <li>難易度選択（Easy / Normal / Hard）</li>
+  <li>出題数選択</li>
+  <li>クイズ開始</li>
+  <li>用語辞典・作業マニュアルへのアクセス</li>
+  <li>成績履歴の確認</li>
+  <li>ランキングの確認（画面下部）</li>
+</ul>
+
+<!-- 4. クイズの始め方 -->
+<h2 id="sec4">クイズの始め方</h2>
+<ol class="step-list">
+  <li><strong>ジャンルを選択</strong>：「全ジャンル」または個別ジャンルのボタンをタップ</li>
+  <li><strong>難易度を選択</strong>：Easy（★☆☆）/ Normal（★★☆）/ Hard（★★★）</li>
+  <li><strong>出題数を選択</strong>：10問 / 20問 / 30問 / 50問 / 100問 / 全問</li>
+  <li>「<strong>クイズ開始</strong>」ボタンをタップ</li>
+</ol>
+
+<!-- 5. クイズ画面の使い方 -->
+<h2 id="sec5">クイズ画面の使い方</h2>
+<h3>画面構成</h3>
+<ul>
+  <li>上部：進捗バー・問題番号・スコア</li>
+  <li>ジャンルバッジ・難易度表示（★マーク）</li>
+  <li>問題文</li>
+  <li>画像（ある場合）</li>
+  <li>4つの選択肢（A / B / C / D）</li>
+  <li>ヒントボタン</li>
+</ul>
+
+<h3>回答方法</h3>
+<ol class="step-list">
+  <li>選択肢をタップして回答</li>
+  <li>正解は<span style="color:#00b894;font-weight:700;">緑色</span>、不正解は<span style="color:#ff6b6b;font-weight:700;">赤色</span>で表示</li>
+  <li>解説が表示される</li>
+  <li>「次の問題」ボタンで次へ進む</li>
+</ol>
+
+<h3>ヒント機能</h3>
+<p>「&#x1F4A1; ヒントを見る」ボタンをタップすると、解答のヒントが表示されます。</p>
+
+<h3>途中操作</h3>
+<ul>
+  <li><strong>「トップに戻る」</strong>：スタート画面に戻る（進捗リセット）</li>
+  <li><strong>「ここまでの結果を表示」</strong>：途中で結果を確認</li>
+</ul>
+
+<!-- 6. 結果画面 -->
+<h2 id="sec6">結果画面</h2>
+<p>クイズ終了後、以下が表示されます：</p>
+<ul>
+  <li>最終スコア（正解数 / 出題数）</li>
+  <li>評価ランク</li>
+  <li>ジャンル別の正答率</li>
+  <li>間違えた問題の確認</li>
+</ul>
+
+<h3>評価ランク</h3>
+<table>
+  <tr><th>正答率</th><th>ランク</th></tr>
+  <tr><td>90%以上</td><td>&#x1F3C6; 最優秀！素晴らしい実力です！</td></tr>
+  <tr><td>70%以上</td><td>&#x1F3AF; 合格レベル！さらに上を目指しましょう！</td></tr>
+  <tr><td>50%以上</td><td>&#x1F4D6; もう少し！復習して再挑戦を！</td></tr>
+  <tr><td>50%未満</td><td>&#x1F4AA; 基礎からしっかり学習しましょう！</td></tr>
+</table>
+
+<!-- 7. ランキング機能 -->
+<h2 id="sec7">ランキング機能</h2>
+<p>スタート画面の下部に、難易度別（Easy / Normal / Hard）のランキングが表示されます。</p>
+<ul>
+  <li>正解率の高い<strong>上位3名</strong>が表示されます</li>
+  <li>全ユーザーの成績に基づいて算出されます</li>
+</ul>
+
+<!-- 8. 用語辞典・作業マニュアル -->
+<h2 id="sec8">用語辞典・作業マニュアル</h2>
+<h3>用語辞典</h3>
+<p>建築設備に関連する<strong>176語</strong>の専門用語を収録。読み仮名・解説付き。画像がある用語はタップで拡大表示できます。</p>
+
+<h3>作業マニュアル</h3>
+<p>現場での作業手順や注意ポイントをまとめたマニュアルです。</p>
+
+<!-- 9. 成績履歴 -->
+<h2 id="sec9">成績履歴</h2>
+<p>過去のクイズ結果を確認できます。</p>
+<ul>
+  <li>日時・ジャンル・難易度・スコア・正答率が記録されます</li>
+  <li>クラウドに保存されるため、端末を変えても確認可能です</li>
+</ul>
+
+<!-- 10. 画像の拡大表示 -->
+<h2 id="sec10">画像の拡大表示</h2>
+<p>問題に画像がある場合、画像をタップすると全画面で表示されます。</p>
+
+<h3>操作方法</h3>
+<table>
+  <tr><th>操作</th><th>動作</th></tr>
+  <tr><td>タップ</td><td>画像を全画面で表示</td></tr>
+  <tr><td>ピンチ（2本指）</td><td>拡大・縮小（1〜5倍）</td></tr>
+  <tr><td>ダブルタップ</td><td>2.5倍に拡大 / 元に戻す</td></tr>
+  <tr><td>ドラッグ</td><td>拡大時に画像を移動</td></tr>
+  <tr><td>マウスホイール</td><td>PC使用時の拡大・縮小</td></tr>
+  <tr><td>&times;ボタン / 画像外タップ</td><td>閉じる（非拡大時のみ）</td></tr>
+</table>
+
+<!-- 11. アカウント管理 -->
+<h2 id="sec11">アカウント管理（退会）</h2>
+<p>アカウントを削除（退会）することができます。</p>
+<ol class="step-list">
+  <li>画面上部の「<strong>退会</strong>」ボタンをタップ</li>
+  <li>確認ダイアログで「OK」を選択</li>
+  <li>アカウントと全ての成績データが削除されます</li>
+</ol>
+<div class="warn-box">退会すると成績データは<strong>完全に削除</strong>され、復元できません。十分にご注意ください。</div>
+
+<!-- 12. よくある質問 -->
+<h2 id="sec12">よくある質問</h2>
+
+<div class="faq-item">
+  <div class="faq-q">別の端末からでもデータを使えますか？</div>
+  <div class="faq-a">はい。同じ漢字フルネーム・パスワードでログインすれば、クラウドでデータが共有されます。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">パスワードを忘れました。</div>
+  <div class="faq-a">管理者にご連絡ください。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">ログインできません。</div>
+  <div class="faq-a">パスワードの大文字・小文字を確認してください。それでも解決しない場合は管理者にお問い合わせください。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">成績がリセットされました。</div>
+  <div class="faq-a">同じ名前・パスワードでログインすれば成績は保持されます。別の名前でログインした場合、別アカウントとして扱われます。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">オフラインでも使えますか？</div>
+  <div class="faq-a">初回はインターネット接続が必要です。データの保存・読み込みにもインターネット接続が必要です。</div>
+</div>
+
+<div class="doc-footer">ARAKI CONSTRUCTION TRAINING SYSTEM &copy; 2026</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>建築設備 知識クイズ Pro - 取扱説明書（管理者用）v13.1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap">
+<style>
+  :root { --primary: #6c5ce7; --primary-light: #a29bfe; --primary-bg: #f0eeff; --text: #2d3436; --text-muted: #636e72; --border: #dfe6e9; --bg: #ffffff; --section-bg: #fafbfc; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans JP', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; font-size: 15px; }
+
+  @media print {
+    body { font-size: 12px; line-height: 1.6; }
+    .cover-page, section { page-break-inside: avoid; }
+    .cover-page { page-break-after: always; }
+    .toc { page-break-after: always; }
+    h2 { page-break-before: always; }
+  }
+
+  .cover-page { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #2d3436 0%, #6c5ce7 60%, #a29bfe 100%); color: #fff; text-align: center; padding: 40px 20px; }
+  .cover-icon { font-size: 80px; margin-bottom: 20px; }
+  .cover-title { font-size: 36px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px; }
+  .cover-subtitle { font-size: 22px; font-weight: 500; opacity: 0.9; margin-bottom: 30px; }
+  .cover-version { font-size: 18px; background: rgba(255,255,255,0.2); padding: 8px 28px; border-radius: 30px; margin-bottom: 12px; display: inline-block; }
+  .cover-date { font-size: 15px; opacity: 0.8; margin-bottom: 30px; }
+  .cover-notice { font-size: 13px; background: rgba(255,107,107,0.25); border: 1px solid rgba(255,107,107,0.4); padding: 10px 24px; border-radius: 8px; margin-bottom: 30px; }
+  .cover-company { font-size: 13px; letter-spacing: 3px; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px; }
+
+  .content { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+
+  .toc { margin-bottom: 40px; }
+  .toc h2 { page-break-before: avoid; }
+  .toc-list { list-style: none; counter-reset: toc; }
+  .toc-list li { counter-increment: toc; border-bottom: 1px dotted var(--border); padding: 10px 0; }
+  .toc-list li a { color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .toc-list li a:hover { color: var(--primary); }
+  .toc-list li a::before { content: counter(toc) '.'; color: var(--primary); font-weight: 700; min-width: 24px; }
+
+  h2 { font-size: 24px; font-weight: 900; color: var(--primary); border-left: 5px solid var(--primary); padding: 8px 0 8px 16px; margin: 48px 0 24px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--text); margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--primary-bg); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  th { background: var(--primary); color: #fff; padding: 10px 14px; text-align: left; font-weight: 500; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: var(--section-bg); }
+
+  .info-box { background: var(--primary-bg); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; }
+  .warn-box { background: #fff8e1; border-left: 4px solid #f39c12; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; }
+  .warn-box::before { content: '\26A0\FE0F '; }
+  .danger-box { background: #ffeaea; border-left: 4px solid #ff6b6b; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 14px; }
+  .danger-box::before { content: '\1F6A8 '; }
+
+  ul, ol { margin: 10px 0 16px 24px; }
+  li { margin-bottom: 6px; }
+  .step-list { list-style: none; counter-reset: step; margin-left: 0; }
+  .step-list li { counter-increment: step; padding: 10px 14px 10px 48px; position: relative; background: var(--section-bg); border-radius: 8px; margin-bottom: 8px; }
+  .step-list li::before { content: counter(step); position: absolute; left: 12px; top: 10px; width: 28px; height: 28px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+
+  .faq-item { margin-bottom: 20px; }
+  .faq-q { font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+  .faq-q::before { content: 'Q. '; }
+  .faq-a { padding-left: 24px; color: var(--text-muted); }
+  .faq-a::before { content: 'A. '; font-weight: 700; color: var(--text); }
+
+  .doc-footer { text-align: center; padding: 30px 0; margin-top: 40px; border-top: 2px solid var(--border); color: var(--text-muted); font-size: 12px; letter-spacing: 2px; }
+
+  p { margin-bottom: 12px; }
+  strong { color: var(--text); }
+  code { background: #f1f2f6; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-family: 'Courier New', monospace; }
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="cover-page">
+  <div class="cover-icon">&#x2699;&#xFE0F;</div>
+  <div class="cover-title">建築設備 知識クイズ Pro</div>
+  <div class="cover-subtitle">取扱説明書（管理者用）</div>
+  <div class="cover-version">Version 13.1</div>
+  <div class="cover-date">2026年3月19日</div>
+  <div class="cover-notice">※本書は管理者向けです。一般ユーザーには配布しないでください。</div>
+  <div class="cover-company">ARAKI CONSTRUCTION TRAINING SYSTEM</div>
+</div>
+
+<div class="content">
+
+<!-- 目次 -->
+<div class="toc">
+<h2 id="toc" style="page-break-before:avoid;">目次</h2>
+<ol class="toc-list">
+  <li><a href="#sec1">システム概要</a></li>
+  <li><a href="#sec2">管理者ログイン方法</a></li>
+  <li><a href="#sec3">管理者ダッシュボード</a></li>
+  <li><a href="#sec4">ユーザー管理</a></li>
+  <li><a href="#sec5">ランキング機能</a></li>
+  <li><a href="#sec6">データ管理（Firebase Firestore）</a></li>
+  <li><a href="#sec7">問題データについて</a></li>
+  <li><a href="#sec8">セキュリティ</a></li>
+  <li><a href="#sec9">トラブルシューティング</a></li>
+</ol>
+</div>
+
+<!-- 1. システム概要 -->
+<h2 id="sec1">システム概要</h2>
+
+<h3>基本情報</h3>
+<table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>アプリ名</td><td>建築設備 知識クイズ Pro</td></tr>
+  <tr><td>バージョン</td><td>v13.1</td></tr>
+  <tr><td>公開URL</td><td>https://rrryo527-cmyk.github.io/haikan-quiz/</td></tr>
+  <tr><td>ホスティング</td><td>GitHub Pages</td></tr>
+  <tr><td>データベース</td><td>Firebase Firestore（asia-northeast1）</td></tr>
+  <tr><td>プラン</td><td>Sparkプラン（無料）</td></tr>
+  <tr><td>問題数</td><td>2,911問（12ジャンル）</td></tr>
+  <tr><td>用語辞典</td><td>176語</td></tr>
+  <tr><td>過去問画像</td><td>714枚</td></tr>
+</table>
+
+<h3>データ保存方式</h3>
+<p>全てのユーザーデータ（アカウント情報・成績・履歴）は<strong>Firebase Firestore</strong>にクラウド保存されます。端末のブラウザに依存せず、複数端末からアクセス可能です。</p>
+<div class="info-box">localStorageは使用していません。全データはクラウドに保存されます。</div>
+
+<!-- 2. 管理者ログイン方法 -->
+<h2 id="sec2">管理者ログイン方法</h2>
+<ol class="step-list">
+  <li>通常のログイン画面から、<strong>管理者アカウント</strong>の漢字フルネームとパスワードでログイン</li>
+  <li>ログイン成功後、ウェルカムバーの右上に <strong>&#x2699;&#xFE0F;（歯車）ボタン</strong> が表示されます</li>
+  <li>&#x2699;&#xFE0F; ボタンをタップすると、管理者ダッシュボードが開きます</li>
+</ol>
+
+<div class="warn-box">セキュリティのため、管理者アカウント情報は本書には記載しません。管理者アカウント情報は直接管理者間で共有してください。</div>
+<div class="info-box">管理者でログインしても、通常ユーザーと同じクイズ画面が表示されます。管理者ダッシュボードは &#x2699;&#xFE0F; ボタンからのみアクセスできます。</div>
+
+<!-- 3. 管理者ダッシュボード -->
+<h2 id="sec3">管理者ダッシュボード</h2>
+<p>&#x2699;&#xFE0F; ボタンをタップすると表示される管理画面です。</p>
+
+<h3>全登録ユーザー一覧</h3>
+<ul>
+  <li>管理者アカウントを除く全ユーザーが一覧表示されます</li>
+  <li>成績がないユーザーも表示されます</li>
+</ul>
+
+<h3>ユーザー詳細画面</h3>
+<p>ユーザー名をタップすると、以下の詳細情報が表示されます：</p>
+<ul>
+  <li><strong>ジャンル別正答率</strong>：各ジャンルでの成績</li>
+  <li><strong>成績推移グラフ</strong>：時系列での成績変化</li>
+  <li><strong>ヒートマップ</strong>：学習頻度の可視化</li>
+  <li><strong>全履歴一覧</strong>：日時・ジャンル・難易度・スコア</li>
+</ul>
+
+<!-- 4. ユーザー管理 -->
+<h2 id="sec4">ユーザー管理</h2>
+
+<h3>ユーザーの強制削除</h3>
+<ol class="step-list">
+  <li>管理者ダッシュボードでユーザーを選択</li>
+  <li>ユーザー詳細画面内の「<strong>削除</strong>」ボタンをタップ</li>
+  <li>確認ダイアログで「OK」を選択</li>
+  <li>そのユーザーのアカウント・成績データが全て削除されます</li>
+</ol>
+<div class="danger-box">削除されたユーザーのデータは復元できません。慎重に操作してください。</div>
+
+<h3>ユーザーの自己退会</h3>
+<p>ユーザーは自分でアカウントを削除（退会）することもできます。ウェルカムバーの「退会」ボタンから実行可能です。退会するとアカウント・成績データが全て削除されます。</p>
+
+<!-- 5. ランキング機能 -->
+<h2 id="sec5">ランキング機能</h2>
+<p>スタート画面の下部に、難易度別（Easy / Normal / Hard）のランキングが表示されます。</p>
+<ul>
+  <li>正解率の高い上位3名が表示されます</li>
+  <li><strong>管理者アカウントはランキングから自動的に除外されます</strong></li>
+  <li>Firestoreから最新データを取得して算出</li>
+</ul>
+
+<!-- 6. データ管理 -->
+<h2 id="sec6">データ管理（Firebase Firestore）</h2>
+
+<h3>Firestoreコレクション構成</h3>
+<table>
+  <tr><th>コレクション</th><th>内容</th></tr>
+  <tr><td><code>accounts</code></td><td>ユーザーアカウント情報（名前・パスワード・ロール）</td></tr>
+  <tr><td><code>results</code></td><td>ユーザーの最新成績データ（ジャンル別・難易度別正答率）</td></tr>
+  <tr><td><code>history</code></td><td>クイズ実行履歴（日時・ジャンル・難易度・スコア）</td></tr>
+</table>
+
+<h3>重要事項</h3>
+<ul>
+  <li>データはFirestoreにクラウド保存されます（localStorageは使用しません）</li>
+  <li>セキュリティルールは期限なしに設定済みです</li>
+  <li>リージョン：asia-northeast1（東京）</li>
+  <li>プラン：Sparkプラン（無料枠内で運用）</li>
+</ul>
+<div class="warn-box">Sparkプランの無料枠を超えるとアクセスが制限される可能性があります。大規模な利用の場合はBlazeプランへの移行を検討してください。</div>
+
+<!-- 7. 問題データ -->
+<h2 id="sec7">問題データについて</h2>
+<p>問題データは <code>index.html</code> 内にJavaScript配列（<code>ALL_QUESTIONS</code>）として埋め込まれています。</p>
+
+<h3>問題のデータ構造</h3>
+<table>
+  <tr><th>プロパティ</th><th>内容</th><th>必須</th></tr>
+  <tr><td><code>q</code></td><td>問題文</td><td>&#x2714;</td></tr>
+  <tr><td><code>o</code></td><td>選択肢（4択の配列）</td><td>&#x2714;</td></tr>
+  <tr><td><code>a</code></td><td>正解のインデックス（0〜3）</td><td>&#x2714;</td></tr>
+  <tr><td><code>ex</code></td><td>解説</td><td>&#x2714;</td></tr>
+  <tr><td><code>d</code></td><td>難易度（1=Easy, 2=Normal, 3=Hard）</td><td>&#x2714;</td></tr>
+  <tr><td><code>genre</code></td><td>ジャンルID（0〜11）</td><td>&#x2714;</td></tr>
+  <tr><td><code>img</code></td><td>画像パス</td><td></td></tr>
+  <tr><td><code>h</code></td><td>ヒント</td><td></td></tr>
+  <tr><td><code>oex</code></td><td>各選択肢の個別解説（配列）</td><td></td></tr>
+</table>
+
+<h3>ジャンル別問題数</h3>
+<table>
+  <tr><th>ID</th><th>ジャンル</th><th>問題数</th></tr>
+  <tr><td>0</td><td>配管工事</td><td>312問</td></tr>
+  <tr><td>1</td><td>消防設備点検</td><td>212問</td></tr>
+  <tr><td>2</td><td>貯水槽清掃</td><td>207問</td></tr>
+  <tr><td>3</td><td>排水管清掃</td><td>206問</td></tr>
+  <tr><td>4</td><td>設備点検</td><td>238問</td></tr>
+  <tr><td>5</td><td>ビジネスマナー</td><td>174問</td></tr>
+  <tr><td>6</td><td>内装工事</td><td>200問</td></tr>
+  <tr><td>7</td><td>管工事施工管理</td><td>309問</td></tr>
+  <tr><td>8</td><td>土木施工管理</td><td>203問</td></tr>
+  <tr><td>9</td><td>建築施工管理</td><td>285問</td></tr>
+  <tr><td>10</td><td>給水装置</td><td>275問</td></tr>
+  <tr><td>11</td><td>第2種電気工事士</td><td>290問</td></tr>
+</table>
+
+<!-- 8. セキュリティ -->
+<h2 id="sec8">セキュリティ</h2>
+<p>本アプリでは以下のセキュリティ対策を実施しています：</p>
+<ul>
+  <li><strong>管理者認証</strong>：管理者機能は認証済みアカウントのみアクセス可能</li>
+  <li><strong>ハニーポット</strong>：不正アクセスの検知</li>
+  <li><strong>整合性チェック</strong>：データの整合性を検証</li>
+  <li><strong>sessionStorage</strong>：プルリフレッシュによるセッション切断を防止</li>
+</ul>
+
+<!-- 9. トラブルシューティング -->
+<h2 id="sec9">トラブルシューティング</h2>
+
+<div class="faq-item">
+  <div class="faq-q">管理者ダッシュボードが表示されない</div>
+  <div class="faq-a">管理者アカウントでログインしているか確認してください。&#x2699;&#xFE0F; ボタンはウェルカムバーの右上に表示されます。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">ユーザーデータが表示されない</div>
+  <div class="faq-a">インターネット接続を確認してください。Firestoreへの接続にはインターネットが必要です。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">ランキングが更新されない</div>
+  <div class="faq-a">ページをリロードしてください。最新データはFirestoreから自動取得されます。</div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">ユーザーから「ログインできない」と報告があった</div>
+  <div class="faq-a">以下を確認してください：<br>
+    1. 漢字フルネームが登録時と一致しているか<br>
+    2. パスワードの大文字・小文字が正しいか<br>
+    3. インターネット接続が正常か
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">Firebase接続エラーが発生する</div>
+  <div class="faq-a">以下を確認してください：<br>
+    1. インターネット接続が正常か<br>
+    2. Firebase Console（https://console.firebase.google.com/）でプロジェクトが正常に動作しているか<br>
+    3. Sparkプランの無料枠を超えていないか
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-q">問題データを追加・修正したい</div>
+  <div class="faq-a"><code>index.html</code> 内の <code>ALL_QUESTIONS</code> 配列を編集してください。編集後はGitHub Pagesへのデプロイ（git push）が必要です。</div>
+</div>
+
+<div class="doc-footer">ARAKI CONSTRUCTION TRAINING SYSTEM &copy; 2026 ｜ 本書は管理者専用です</div>
+</div>
+</body>
+</html>
