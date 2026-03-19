@@ -27,12 +27,12 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html {
-    overflow-x: hidden;
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100%;
+    width: 100%;
   }
   body {
-    overflow-x: hidden;
-    width: 100%;
     background: var(--bg);
     color: var(--text);
     font-family: 'Noto Sans JP', 'Inter', 'Hiragino Kaku Gothic ProN', sans-serif;
@@ -92,8 +92,15 @@
     .genre-btn:hover::before { opacity: 1; }
     .genre-btn:hover { border-color: var(--accent); color: var(--accent2); box-shadow: 0 0 16px var(--accent-glow); }
   }
-  .genre-btn:focus, .genre-btn:focus-visible { outline: none; border-color: var(--border); }
-  .genre-btn.selected:focus, .genre-btn.selected:focus-visible { border-color: var(--accent); }
+  .genre-btn:focus, .genre-btn:focus-visible, .genre-btn:active:not(.selected) {
+    outline: none !important;
+    border-color: var(--border) !important;
+    box-shadow: none !important;
+  }
+  .genre-btn.selected, .genre-btn.selected:focus, .genre-btn.selected:focus-visible {
+    border-color: var(--accent) !important;
+    box-shadow: 0 4px 16px var(--accent-glow) !important;
+  }
   .genre-btn.selected { border-color: var(--accent); color: #fff; background: linear-gradient(135deg, var(--accent), #8b5cf6); box-shadow: 0 4px 16px var(--accent-glow); }
   .genre-btn .genre-icon { display: block; font-size: 22px; margin-bottom: 4px; }
   .genre-btn .genre-count { display: block; font-size: 10px; font-weight: 400; opacity: 0.8; margin-top: 2px; }
@@ -1550,7 +1557,7 @@ function renderRankingFromCache(){
   const data=_cachedAllUsersData;
   const adminName=_AH.name;
   const medals=['🥇','🥈','🥉'];
-  const diffNames=[{key:1,label:'⭐ Easy',color:'var(--correct)',bg:'rgba(0,184,148,0.1)'},{key:2,label:'⭐⭐ Normal',color:'var(--accent)',bg:'rgba(108,92,231,0.1)'},{key:3,label:'⭐⭐⭐ Hard',color:'var(--wrong)',bg:'rgba(255,107,107,0.1)'}];
+  const diffNames=[{key:-1,label:'🎲 総合',color:'var(--text)',bg:'rgba(255,255,255,0.05)'},{key:1,label:'⭐ Easy',color:'var(--correct)',bg:'rgba(0,184,148,0.1)'},{key:2,label:'⭐⭐ Normal',color:'var(--accent)',bg:'rgba(108,92,231,0.1)'},{key:3,label:'⭐⭐⭐ Hard',color:'var(--wrong)',bg:'rgba(255,107,107,0.1)'}];
 
   let html='<h2 style="font-size:16px;margin-bottom:12px;color:var(--text);">🏆 正解率ランキング</h2>';
 
@@ -1559,7 +1566,7 @@ function renderRankingFromCache(){
     const userStats=[];
     for(const user in data){
       if(user===adminName)continue; // 親アカウント除外
-      const records=data[user].filter(function(r){return r.diff===d.key;});
+      const records=d.key===-1?data[user]:data[user].filter(function(r){return r.diff===d.key;});
       if(records.length===0)continue;
       const totalScore=records.reduce(function(s,r){return s+r.score;},0);
       const totalQ=records.reduce(function(s,r){return s+r.total;},0);
