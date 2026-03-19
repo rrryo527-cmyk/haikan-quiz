@@ -253,15 +253,6 @@
   /* Footer branding */
   .app-footer { text-align: center; padding: 24px 0 12px; font-size: 11px; color: var(--text-muted); opacity: 0.5; letter-spacing: 1px; }
 
-  /* Ranking */
-  .ranking-section { margin-bottom: 16px; }
-  .ranking-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; padding: 8px 12px; border-radius: 8px; }
-  .ranking-row { display: flex; align-items: center; padding: 8px 12px; border-radius: 8px; margin-bottom: 4px; background: var(--surface2); border: 1px solid var(--border); }
-  .ranking-medal { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
-  .ranking-name { flex: 1; font-size: 14px; font-weight: 600; }
-  .ranking-pct { font-size: 16px; font-weight: 900; font-family: Oswald; width: 60px; text-align: right; flex-shrink: 0; }
-  .ranking-count { font-size: 11px; color: var(--text-muted); width: 50px; text-align: right; flex-shrink: 0; }
-
   /* Admin Dashboard Enhanced */
   .admin-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:20px; }
   .admin-stat-card { background:var(--surface2); border-radius:12px; padding:16px; text-align:center; border:1px solid var(--border); }
@@ -396,7 +387,6 @@
       <button class="btn-secondary" id="manualBtn">📋 作業マニュアル</button>
       <button class="btn-secondary" id="historyBtn">📊 成績履歴を見る</button>
       <!-- 管理者ボタンはウェルカムバー右上に移動 -->
-      <div id="rankingArea" style="margin-top:24px;"></div>
     </div>
   </div>
 
@@ -512,7 +502,7 @@ function showResult(){document.getElementById('quizScreen').style.display='none'
 // 間違えた問題を保存
 saveWrongQuestions();
 const total=questions.length;const pct=Math.round(score/total*100);document.getElementById('finalScore').textContent=score;document.getElementById('finalTotal').textContent=`/ ${total}問中正解`;let rank='';if(pct>=90)rank='🏆 最優秀！素晴らしい実力です！';else if(pct>=70)rank='🎯 合格レベル！さらに上を目指しましょう！';else if(pct>=50)rank='📖 もう少し！復習して再挑戦を！';else rank='💪 基礎からしっかり学習しましょう！';document.getElementById('finalRank').textContent=rank;const bd=document.getElementById('resultBreakdown');bd.innerHTML='';GENRES.forEach((g,i)=>{const s=genreStats[i];if(s&&s.t>0){const div=document.createElement('div');div.className='breakdown-item';div.innerHTML=`<span class="val">${s.c}/${s.t}</span>${g.icon} ${g.name}`;bd.appendChild(div);}});saveHistory(total,score,pct);}
-function saveHistory(total,score,pct){try{const h=JSON.parse(localStorage.getItem('quizHistory')||'[]');h.push({date:new Date().toISOString(),genre:selectedGenre,diff:selectedDiff,total,score,pct});if(h.length>100)h.splice(0,h.length-100);localStorage.setItem('quizHistory',JSON.stringify(h));}catch(e){}}
+function saveHistory(total,score,pct){try{const h=JSON.parse(localStorage.getItem('quizHistory')||'[]');h.push({date:new Date().toISOString(),genre:selectedGenre,total,score,pct});if(h.length>100)h.splice(0,h.length-100);localStorage.setItem('quizHistory',JSON.stringify(h));}catch(e){}}
 function getHistory(){try{return JSON.parse(localStorage.getItem('quizHistory')||'[]');}catch(e){return [];}}
 
 document.querySelectorAll('.genre-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.genre-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedGenre=parseInt(btn.dataset.genre);});});
@@ -522,7 +512,7 @@ document.getElementById('startBtn').addEventListener('click',()=>{
   wrongQuestions=[];startQuiz(selectedGenre,selectedCount);
 });
 document.getElementById('retryBtn').addEventListener('click',()=>{wrongQuestions=[];startQuiz(selectedGenre,selectedCount);});
-document.getElementById('backBtn').addEventListener('click',()=>{document.getElementById('resultScreen').style.display='none';document.getElementById('startScreen').style.display='block';renderRanking();window.scrollTo(0,0);});
+document.getElementById('backBtn').addEventListener('click',()=>{document.getElementById('resultScreen').style.display='none';document.getElementById('startScreen').style.display='block';window.scrollTo(0,0);});
 updateGenreCounts();
 
 // ============================================================
@@ -1106,7 +1096,6 @@ function loginAs(name) {
 
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('startScreen').style.display = 'block';
-  renderRanking();
   window.scrollTo(0, 0);
 }
 
@@ -1120,7 +1109,6 @@ function loginAsAdmin() {
   document.getElementById('adminBtn').style.display = '';
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('startScreen').style.display = 'block';
-  renderRanking();
   window.scrollTo(0, 0);
 }
 
@@ -1147,7 +1135,7 @@ function saveUserResult(userName){
   try{
     const data=JSON.parse(localStorage.getItem('allUsersData')||'{}');
     if(!data[userName])data[userName]=[];
-    data[userName].push({date:new Date().toISOString(),genre:selectedGenre,diff:selectedDiff,total:questions.length,score,pct:Math.round(score/questions.length*100),wrong:wrongQuestions.map(w=>w.q)});
+    data[userName].push({date:new Date().toISOString(),genre:selectedGenre,total:questions.length,score,pct:Math.round(score/questions.length*100),wrong:wrongQuestions.map(w=>w.q)});
     if(data[userName].length>200)data[userName].splice(0,data[userName].length-200);
     localStorage.setItem('allUsersData',JSON.stringify(data));
   }catch(e){}
@@ -1168,8 +1156,6 @@ document.getElementById('historyBack').addEventListener('click',()=>{
 document.getElementById('clearHistoryBtn').addEventListener('click',()=>{
   if(confirm('履歴をすべて削除しますか？')){localStorage.removeItem('quizHistory');renderHistory();}
 });
-const DIFF_LABELS=['すべて','Easy','Normal','Hard'];
-const DIFF_COLORS=['var(--text-muted)','var(--correct)','var(--accent)','var(--wrong)'];
 function renderHistory(){
   const h=getHistory();
   const el=document.getElementById('historyContent');
@@ -1178,63 +1164,10 @@ function renderHistory(){
     const d=new Date(r.date);
     const ds=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+' '+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
     const gn=r.genre===-1?'全ジャンル':(GENRES[r.genre]?GENRES[r.genre].icon+' '+GENRES[r.genre].name:'不明');
-    const diffIdx=r.diff||0;
-    const diffLabel=DIFF_LABELS[diffIdx]||'すべて';
-    const diffColor=DIFF_COLORS[diffIdx]||'var(--text-muted)';
     const color=r.pct>=70?'var(--correct)':r.pct>=50?'var(--accent)':'var(--wrong)';
-    return '<div class="glossary-item" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;"><div><strong>'+ds+'</strong><br><span style="font-size:13px;color:var(--text-muted);">'+gn+'</span><br><span style="font-size:12px;font-weight:700;color:'+diffColor+';">'+diffLabel+'</span></div><div style="text-align:right;"><span style="font-size:20px;font-weight:900;color:'+color+';font-family:Oswald;">'+r.score+'/'+r.total+'</span><br><span style="font-size:12px;color:var(--text-muted);">'+r.pct+'%</span></div></div>';
+    return '<div class="glossary-item" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;"><div><strong>'+ds+'</strong><br><span style="font-size:13px;color:var(--text-muted);">'+gn+'</span></div><div style="text-align:right;"><span style="font-size:20px;font-weight:900;color:'+color+';font-family:Oswald;">'+r.score+'/'+r.total+'</span><br><span style="font-size:12px;color:var(--text-muted);">'+r.pct+'%</span></div></div>';
   });
   el.innerHTML=rows.join('');
-}
-
-// ============================================================
-// ランキング表示
-// ============================================================
-function renderRanking(){
-  const area=document.getElementById('rankingArea');
-  if(!area)return;
-  const data=JSON.parse(localStorage.getItem('allUsersData')||'{}');
-  const adminName=_AH.name;
-  const medals=['🥇','🥈','🥉'];
-  const diffNames=[{key:1,label:'⭐ Easy',color:'var(--correct)',bg:'rgba(0,184,148,0.1)'},{key:2,label:'⭐⭐ Normal',color:'var(--accent)',bg:'rgba(108,92,231,0.1)'},{key:3,label:'⭐⭐⭐ Hard',color:'var(--wrong)',bg:'rgba(255,107,107,0.1)'}];
-
-  let html='<h2 style="font-size:16px;margin-bottom:12px;color:var(--text);">🏆 正解率ランキング</h2>';
-
-  diffNames.forEach(function(d){
-    // 各ユーザーの該当難易度の平均正解率を計算
-    const userStats=[];
-    for(const user in data){
-      if(user===adminName)continue; // 親アカウント除外
-      const records=data[user].filter(function(r){return r.diff===d.key;});
-      if(records.length===0)continue;
-      const totalScore=records.reduce(function(s,r){return s+r.score;},0);
-      const totalQ=records.reduce(function(s,r){return s+r.total;},0);
-      const avgPct=totalQ>0?Math.round(totalScore/totalQ*100):0;
-      userStats.push({name:user,pct:avgPct,count:records.length});
-    }
-    userStats.sort(function(a,b){return b.pct-a.pct;});
-    const top3=userStats.slice(0,3);
-
-    html+='<div class="ranking-section">';
-    html+='<div class="ranking-title" style="color:'+d.color+';background:'+d.bg+';">'+d.label+'</div>';
-
-    if(top3.length===0){
-      html+='<div style="padding:8px 12px;font-size:13px;color:var(--text-muted);">まだデータがありません</div>';
-    }else{
-      top3.forEach(function(u,i){
-        const pctColor=u.pct>=70?'var(--correct)':u.pct>=50?'var(--accent)':'var(--wrong)';
-        html+='<div class="ranking-row">';
-        html+='<span class="ranking-medal">'+medals[i]+'</span>';
-        html+='<span class="ranking-name">'+u.name+'</span>';
-        html+='<span class="ranking-count">'+u.count+'回</span>';
-        html+='<span class="ranking-pct" style="color:'+pctColor+';">'+u.pct+'%</span>';
-        html+='</div>';
-      });
-    }
-    html+='</div>';
-  });
-
-  area.innerHTML=html;
 }
 
 // ============================================================
@@ -1295,7 +1228,6 @@ function renderRanking(){
     document.getElementById('adminBtn').style.display = _savedIsAdmin ? '' : 'none';
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('startScreen').style.display = 'block';
-    renderRanking();
   } else {
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'block';
