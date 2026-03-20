@@ -442,6 +442,7 @@
           <button class="genre-btn" data-genre="13"><span class="genre-icon">❓</span>なぞなぞ<span class="genre-count" id="genreCount13"></span></button>
           <button class="genre-btn" data-genre="-1"><span class="genre-icon">🎲</span>全ジャンル<span class="genre-count" id="genreCountAll"></span></button>
         </div>
+        <button class="btn-primary" id="genreSelectBtn" style="margin-top:16px;display:none;">Select</button>
       </div>
       <!-- ステップ2: 難易度・問題数選択 -->
       <div class="step-2-panel" id="step2Panel">
@@ -679,7 +680,8 @@ function showStep1(){
   s1.style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
-document.querySelectorAll('.genre-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.genre-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');showStep2(parseInt(btn.dataset.genre));});});
+document.querySelectorAll('.genre-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.genre-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedGenre=parseInt(btn.dataset.genre);document.getElementById('genreSelectBtn').style.display='block';});});
+document.getElementById('genreSelectBtn').addEventListener('click',()=>{showStep2(selectedGenre);});
 document.getElementById('genreBackBtn').addEventListener('click',showStep1);
 document.querySelectorAll('#countSelector .count-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#countSelector .count-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedCount=parseInt(btn.dataset.count);});});
 document.querySelectorAll('#diffSelector .count-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#diffSelector .count-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedDiff=parseInt(btn.dataset.diff);});});
