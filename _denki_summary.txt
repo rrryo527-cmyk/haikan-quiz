@@ -1,0 +1,29 @@
+==================================================
+第二種電気工事士 過去問取得結果サマリー
+==================================================
+取得URL数: 18
+取得問題数: 540
+画像付き問題数: 233
+エラー数: 0
+
+--- 各URL詳細 ---
+  OK: R7下期 - 30 questions, 12 with images
+  OK: R7上期 - 30 questions, 14 with images
+  OK: R6下期 - 30 questions, 13 with images
+  OK: R6上期 - 30 questions, 11 with images
+  OK: R5下期午後 - 30 questions, 13 with images
+  OK: R5下期午前 - 30 questions, 13 with images
+  OK: R5上期午後 - 30 questions, 12 with images
+  OK: R5上期午前 - 30 questions, 15 with images
+  OK: R4下期午後 - 30 questions, 15 with images
+  OK: R4下期午前 - 30 questions, 14 with images
+  OK: R4上期午後 - 30 questions, 15 with images
+  OK: R4上期午前 - 30 questions, 15 with images
+  OK: R3下期午後 - 30 questions, 10 with images
+  OK: R3下期午前 - 30 questions, 12 with images
+  OK: R3上期午後 - 30 questions, 12 with images
+  OK: R3上期午前 - 30 questions, 13 with images
+  OK: R2下期午後 - 30 questions, 13 with images
+  OK: R2下期午前 - 30 questions, 11 with images
+
+出力ファイル: C:\Users\rrryo\OneDrive\haikan-quiz\_denki_questions.json
