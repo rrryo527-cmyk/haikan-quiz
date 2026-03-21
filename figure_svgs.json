@@ -1,0 +1,166 @@
+[
+  {
+    "term": "仕切弁（ゲート弁）の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='70' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='70,50 100,75 70,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='130,50 100,75 130,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='75' x2='100' y2='40' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "玉形弁（グローブ弁）の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='70' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='70,50 100,75 70,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='130,50 100,75 130,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='75' x2='100' y2='40' stroke='%23333' stroke-width='2'/%3E %3Ccircle cx='100' cy='75' r='8' fill='none' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "逆止弁（チェック弁）の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='80' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='80,50 120,75 80,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='120' y1='45' x2='120' y2='105' stroke='%23333' stroke-width='2'/%3E %3Cline x1='120' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "バタフライ弁の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='70' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='70,50 100,75 70,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='130,50 100,75 130,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='85' y1='45' x2='115' y2='105' stroke='%23333' stroke-width='2.5'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "安全弁の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='85' x2='70' y2='85' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='70,60 100,85 70,110' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='130,60 100,85 130,110' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='85' x2='170' y2='85' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='85' x2='100' y2='50' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='93,50 100,35 107,50' fill='%2523333' stroke='%2523333' stroke-width='1'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "減圧弁の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='20' y1='75' x2='60' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='60,50 90,75 60,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='120,50 90,75 120,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='120' y1='75' x2='180' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='90' y1='75' x2='90' y2='40' stroke='%23333' stroke-width='2'/%3E %3Cline x1='140' y1='60' x2='160' y2='60' stroke='%23333' stroke-width='2'/%3E %3Cline x1='140' y1='60' x2='140' y2='90' stroke='%23333' stroke-width='2'/%3E %3Cline x1='140' y1='90' x2='160' y2='90' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "電動弁の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='85' x2='70' y2='85' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='70,60 100,85 70,110' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='130,60 100,85 130,110' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='85' x2='170' y2='85' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='85' x2='100' y2='50' stroke='%23333' stroke-width='2'/%3E %3Ctext x='100' y='42' text-anchor='middle' font-size='18' font-weight='bold' fill='%23333'%3EM%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "フランジ接合の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='95' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='95' y1='50' x2='95' y2='100' stroke='%23333' stroke-width='3'/%3E %3Cline x1='105' y1='50' x2='105' y2='100' stroke='%23333' stroke-width='3'/%3E %3Cline x1='105' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "ねじ込み接合の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='92' y2='75' stroke='%23333' stroke-width='2'/%3E %3Ccircle cx='100' cy='75' r='8' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='108' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "溶接接合の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='90' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='90' y1='75' x2='100' y2='55' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='55' x2='110' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='90' y1='75' x2='100' y2='95' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='95' x2='110' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cline x1='110' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "ストレーナーの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='65' x2='80' y2='65' stroke='%23333' stroke-width='2'/%3E %3Cline x1='80' y1='65' x2='110' y2='110' stroke='%23333' stroke-width='2'/%3E %3Cline x1='80' y1='65' x2='130' y2='65' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='65' x2='170' y2='65' stroke='%23333' stroke-width='2'/%3E %3Cline x1='95' y1='88' x2='130' y2='65' stroke='%23333' stroke-width='1.5' stroke-dasharray='4,3'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "フレキシブルジョイントの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='75' x2='60' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M60,75 C70,55 80,95 90,75 C100,55 110,95 120,75 C130,55 140,95 140,75' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='140' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "配管の立上り・立下りの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Ctext x='55' y='30' text-anchor='middle' font-size='12' fill='%23333'%3E立上り%3C/text%3E %3Cline x1='30' y1='75' x2='55' y2='75' stroke='%23333' stroke-width='2'/%3E %3Ccircle cx='55' cy='75' r='10' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='65' y1='75' x2='80' y2='75' stroke='%23333' stroke-width='2'/%3E %3Ctext x='145' y='30' text-anchor='middle' font-size='12' fill='%23333'%3E立下り%3C/text%3E %3Cline x1='120' y1='75' x2='145' y2='75' stroke='%23333' stroke-width='2'/%3E %3Ccircle cx='145' cy='75' r='10' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='155' y1='75' x2='170' y2='75' stroke='%23333' stroke-width='2'/%3E %3Ctext x='55' y='110' text-anchor='middle' font-size='11' fill='%23333'%3E●=立上り%3C/text%3E %3Ctext x='145' y='110' text-anchor='middle' font-size='11' fill='%23333'%3E○=立下り%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "一般コンセントの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='60' y1='30' x2='60' y2='130' stroke='%23333' stroke-width='3'/%3E %3Cpath d='M60,75 A25,25 0 0,1 60,50' fill='none' stroke='%23333' stroke-width='2' transform='rotate(90,60,75)'/%3E %3Cpath d='M60,55 A20,20 0 1,1 60,95' fill='none' stroke='%23333' stroke-width='2'/%3E %3Ctext x='130' y='65' text-anchor='middle' font-size='12' fill='%23333'%3E壁面に%3C/text%3E %3Ctext x='130' y='82' text-anchor='middle' font-size='12' fill='%23333'%3E半円形%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "片切スイッチの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='60' y1='30' x2='60' y2='130' stroke='%23333' stroke-width='3'/%3E %3Ccircle cx='60' cy='75' r='8' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='75' x2='110' y2='75' stroke='%23333' stroke-width='1.5'/%3E %3Ctext x='145' y='80' text-anchor='middle' font-size='14' fill='%23333'%3ES%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "3路スイッチの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='60' y1='30' x2='60' y2='130' stroke='%23333' stroke-width='3'/%3E %3Ccircle cx='60' cy='75' r='8' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='75' x2='110' y2='75' stroke='%23333' stroke-width='1.5'/%3E %3Ctext x='130' y='70' text-anchor='middle' font-size='14' fill='%23333'%3ES%3C/text%3E %3Ctext x='140' y='85' text-anchor='middle' font-size='12' fill='%23333'%3E3%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "4路スイッチの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='60' y1='30' x2='60' y2='130' stroke='%23333' stroke-width='3'/%3E %3Ccircle cx='60' cy='75' r='8' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='75' x2='110' y2='75' stroke='%23333' stroke-width='1.5'/%3E %3Ctext x='130' y='70' text-anchor='middle' font-size='14' fill='%23333'%3ES%3C/text%3E %3Ctext x='140' y='85' text-anchor='middle' font-size='12' fill='%23333'%3E4%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "蛍光灯の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cellipse cx='100' cy='75' rx='55' ry='18' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='55' y1='75' x2='145' y2='75' stroke='%23333' stroke-width='1.5'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "ダウンライトの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Ccircle cx='100' cy='75' r='30' fill='none' stroke='%23333' stroke-width='2'/%3E %3Ccircle cx='100' cy='75' r='18' fill='none' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "非常用照明の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Ccircle cx='100' cy='75' r='25' fill='%23333' stroke='%23333' stroke-width='2'/%3E %3Cline x1='75' y1='75' x2='125' y2='75' stroke='white' stroke-width='2'/%3E %3Ctext x='100' y='125' text-anchor='middle' font-size='12' fill='%23333'%3E黒塗り丸に横線%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "誘導灯の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='60' y='45' width='80' height='60' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='85,65 115,75 85,85' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='80' y1='65' x2='80' y2='85' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "分電盤の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='55' y='40' width='90' height='70' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='55' y1='40' x2='145' y2='110' stroke='%23333' stroke-width='1.5'/%3E %3Ctext x='100' y='132' text-anchor='middle' font-size='12' fill='%23333'%3E長方形に斜線%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "配線用遮断器（MCCB）の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='65' y='45' width='70' height='50' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='65' y1='45' x2='135' y2='95' stroke='%23333' stroke-width='1.5'/%3E %3Cline x1='100' y1='30' x2='100' y2='45' stroke='%23333' stroke-width='2'/%3E %3Cline x1='100' y1='95' x2='100' y2='110' stroke='%23333' stroke-width='2'/%3E %3Ctext x='100' y='130' text-anchor='middle' font-size='12' fill='%23333'%3EMCCB%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "接地端子の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='100' y1='30' x2='100' y2='60' stroke='%23333' stroke-width='2'/%3E %3Cline x1='70' y1='60' x2='130' y2='60' stroke='%23333' stroke-width='2.5'/%3E %3Cline x1='78' y1='75' x2='122' y2='75' stroke='%23333' stroke-width='2.5'/%3E %3Cline x1='86' y1='90' x2='114' y2='90' stroke='%23333' stroke-width='2.5'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "引込口の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='70' y1='25' x2='70' y2='125' stroke='%23333' stroke-width='3'/%3E %3Cline x1='100' y1='75' x2='70' y2='75' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='75,68 70,75 75,82' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cline x1='100' y1='75' x2='150' y2='75' stroke='%23333' stroke-width='2'/%3E %3Ctext x='130' y='55' text-anchor='middle' font-size='12' fill='%23333'%3E壁に矢印%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "送風機の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Ccircle cx='100' cy='75' r='35' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M100,75 L90,50' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M100,75 L120,55' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M100,75 L125,80' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M100,75 L110,100' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M100,75 L80,95' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M100,75 L78,60' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M85,48 A30,30 0,0,1 120,52' fill='none' stroke='%23333' stroke-width='1.5'/%3E %3Cpath d='M122,58 A30,30 0,0,1 115,100' fill='none' stroke='%23333' stroke-width='1.5'/%3E %3Cpath d='M108,102 A30,30 0,0,1 78,62' fill='none' stroke='%23333' stroke-width='1.5'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "吹出口の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='70' y='55' width='60' height='40' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='130' y1='65' x2='155' y2='55' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='152,52 160,50 155,58' fill='%23333'/%3E %3Cline x1='130' y1='85' x2='155' y2='95' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='152,98 160,100 155,92' fill='%23333'/%3E %3Ctext x='100' y='80' text-anchor='middle' font-size='11' fill='%23333'%3ESA%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "吸込口の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='70' y='55' width='60' height='40' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='45' y1='55' x2='70' y2='65' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='65,63 70,65 65,68' fill='%23333'/%3E %3Cline x1='45' y1='95' x2='70' y2='85' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='65,82 70,85 65,88' fill='%23333'/%3E %3Ctext x='100' y='80' text-anchor='middle' font-size='11' fill='%23333'%3ERA%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "大便器の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cellipse cx='100' cy='85' rx='28' ry='35' fill='none' stroke='%23333' stroke-width='2'/%3E %3Crect x='78' y='40' width='44' height='25' rx='5' fill='none' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "小便器の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='70' y1='25' x2='70' y2='125' stroke='%23333' stroke-width='3'/%3E %3Cpath d='M70,50 Q120,50 120,75 Q120,100 70,100' fill='none' stroke='%23333' stroke-width='2'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "洗面器の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='60' y1='30' x2='60' y2='120' stroke='%23333' stroke-width='3'/%3E %3Cpath d='M60,40 L140,40 Q150,40 150,50 L150,100 Q150,110 140,110 L60,110' fill='none' stroke='%23333' stroke-width='2'/%3E %3Ccircle cx='100' cy='90' r='5' fill='%23333'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "流し台の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='40' y='35' width='120' height='80' fill='none' stroke='%23333' stroke-width='2'/%3E %3Crect x='55' y='50' width='50' height='50' rx='5' fill='none' stroke='%23333' stroke-width='1.5'/%3E %3Ccircle cx='80' cy='85' r='4' fill='%23333'/%3E %3Cline x1='120' y1='50' x2='120' y2='100' stroke='%23333' stroke-width='1' stroke-dasharray='3,3'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "床排水トラップの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='60' y='40' width='80' height='70' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='60' y1='40' x2='140' y2='110' stroke='%23333' stroke-width='1.5'/%3E %3Cline x1='140' y1='40' x2='60' y2='110' stroke='%23333' stroke-width='1.5'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "通り芯と符号の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='100' y1='25' x2='100' y2='95' stroke='%23333' stroke-width='1' stroke-dasharray='8,4,2,4'/%3E %3Ccircle cx='100' cy='115' r='18' fill='none' stroke='%23333' stroke-width='2'/%3E %3Ctext x='100' y='121' text-anchor='middle' font-size='18' font-weight='bold' fill='%23333'%3EA%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "レベル記号の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cpolygon points='100,45 75,85 125,85' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='125' y1='85' x2='170' y2='85' stroke='%23333' stroke-width='1.5'/%3E %3Ctext x='155' y='75' text-anchor='start' font-size='14' fill='%23333'%3EFL+0%3C/text%3E %3Ctext x='100' y='130' text-anchor='middle' font-size='12' fill='%23333'%3E逆三角形 ▽%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "方位記号の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Ccircle cx='100' cy='80' r='35' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='100,35 93,80 107,80' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cpolygon points='100,125 93,80 107,80' fill='none' stroke='%23333' stroke-width='1'/%3E %3Ctext x='100' y='30' text-anchor='middle' font-size='16' font-weight='bold' fill='%23333'%3EN%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "RC壁の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Crect x='60' y='35' width='80' height='80' fill='none' stroke='%23333' stroke-width='2'/%3E %3Cline x1='60' y1='45' x2='70' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='55' x2='80' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='65' x2='90' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='75' x2='100' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='85' x2='110' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='95' x2='120' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='105' x2='130' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='60' y1='115' x2='140' y2='35' stroke='%23333' stroke-width='1'/%3E %3Cline x1='70' y1='115' x2='140' y2='45' stroke='%23333' stroke-width='1'/%3E %3Cline x1='80' y1='115' x2='140' y2='55' stroke='%23333' stroke-width='1'/%3E %3Cline x1='90' y1='115' x2='140' y2='65' stroke='%23333' stroke-width='1'/%3E %3Cline x1='100' y1='115' x2='140' y2='75' stroke='%23333' stroke-width='1'/%3E %3Cline x1='110' y1='115' x2='140' y2='85' stroke='%23333' stroke-width='1'/%3E %3Cline x1='120' y1='115' x2='140' y2='95' stroke='%23333' stroke-width='1'/%3E %3Cline x1='130' y1='115' x2='140' y2='105' stroke='%23333' stroke-width='1'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "片開きドアの図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='40' y1='100' x2='160' y2='100' stroke='%23333' stroke-width='3'/%3E %3Cline x1='80' y1='100' x2='80' y2='95' stroke='%23333' stroke-width='3'/%3E %3Cline x1='130' y1='100' x2='130' y2='95' stroke='%23333' stroke-width='3'/%3E %3Cline x1='80' y1='100' x2='80' y2='50' stroke='%23333' stroke-width='2'/%3E %3Cpath d='M80,50 A50,50 0,0,1 130,100' fill='none' stroke='%23333' stroke-width='1.5'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "引き戸の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='30' y1='80' x2='170' y2='80' stroke='%23333' stroke-width='3'/%3E %3Cline x1='70' y1='80' x2='70' y2='75' stroke='%23333' stroke-width='3'/%3E %3Cline x1='130' y1='80' x2='130' y2='75' stroke='%23333' stroke-width='3'/%3E %3Cline x1='70' y1='70' x2='130' y2='70' stroke='%23333' stroke-width='2' stroke-dasharray='6,4'/%3E %3Cline x1='80' y1='60' x2='140' y2='60' stroke='%23333' stroke-width='2'/%3E %3Cpolygon points='137,56 143,60 137,64' fill='%23333'/%3E %3C/svg%3E"
+  },
+  {
+    "term": "断面記号の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='100' y1='20' x2='100' y2='130' stroke='%23333' stroke-width='1.5' stroke-dasharray='10,3,2,3'/%3E %3Cpolygon points='70,35 100,35 85,25' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Cpolygon points='130,115 100,115 115,125' fill='%23333' stroke='%23333' stroke-width='1'/%3E %3Ctext x='65' y='40' text-anchor='middle' font-size='14' fill='%23333'%3EA%3C/text%3E %3Ctext x='135' y='120' text-anchor='middle' font-size='14' fill='%23333'%3EA%3C/text%3E %3C/svg%3E"
+  },
+  {
+    "term": "寸法線の図記号",
+    "svg": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='white'/%3E %3Cline x1='50' y1='40' x2='50' y2='100' stroke='%23333' stroke-width='1'/%3E %3Cline x1='150' y1='40' x2='150' y2='100' stroke='%23333' stroke-width='1'/%3E %3Cline x1='50' y1='70' x2='150' y2='70' stroke='%23333' stroke-width='1.5'/%3E %3Cpolygon points='50,67 60,70 50,73' fill='%23333'/%3E %3Cpolygon points='150,67 140,70 150,73' fill='%23333'/%3E %3Ctext x='100' y='62' text-anchor='middle' font-size='13' fill='%23333'%3E1000%3C/text%3E %3C/svg%3E"
+  }
+]
